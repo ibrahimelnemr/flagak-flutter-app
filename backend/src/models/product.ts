@@ -1,11 +1,17 @@
 import mongoose from "mongoose";
 
-  const productSchema = new mongoose.Schema({
+interface IProduct extends mongoose.Document {
+    name: string,
+    description: string,
+    price: number
+}
+
+const productSchema = new mongoose.Schema<IProduct>({
     name: String,
     description: String,
-    email: Number,
-  });
-  
-const Product = mongoose.model('Product', productSchema);
+    price: Number,
+});
 
-export default Product;
+const Product = mongoose.model<IProduct>("Product", productSchema);
+
+export { Product, IProduct }

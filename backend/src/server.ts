@@ -15,6 +15,7 @@ export const app: express.Application = express();
 const PORT: string = "3000";
 
 app.use(cors());
+app.use(bodyParser.json());
 
 // Connect to mongodb
 
@@ -27,10 +28,9 @@ app.get("/", (req: express.Request, res: express.Response) => {
     res.send("Welcome to the store. Navigate to /users or /products");
 });
 
-app.use('/users', userRouter)
-app.use('/products', productRouter)
+app.use("/users", userRouter);
+app.use("/products", productRouter);
 
 app.listen(PORT, () => {
     console.log(`server started at http://localhost:${PORT}`);
-  });
-  
+});
