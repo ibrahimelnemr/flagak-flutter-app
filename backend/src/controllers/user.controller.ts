@@ -1,6 +1,5 @@
 import userDao from "../dao/userDao";
 import express from "express";
-const dao = new userDao();
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -33,7 +32,7 @@ export default class userController {
 
             const password_hash = bcrypt.hashSync(password+bcryptPepper, parseInt(bcryptSaltRounds as string));
 
-            await dao.register(name, email, password_hash, is_admin);
+            await userDao.register(name, email, password_hash, is_admin);
             res.send(`User registered successfully with email: ${email}.`);
         } catch (error) {
             res.status(500).send(`Could not register user: ${error}`);
@@ -54,7 +53,7 @@ export default class userController {
                 .send("Could not register user: invalid input.");
         }
 
-        const userFound = await dao.login(email, password_raw);
+        const userFound = await userDao.login(email, password_raw);
 
         console.log(`user found: ${userFound}`)
 
@@ -75,15 +74,6 @@ export default class userController {
 
             console.log(`User added successfully with token ${token}`)
 
-            // const isAdmin = await dao.isAdmin(email, password_raw);
-
-            // if (isAdmin) {
-            //     console.log(`User with email ${email} is an admin`)
-            // }
-            // else {
-            //     console.log(`User with email ${email} is not an admin`)
-            // } 
-
         } else {
             res.send("User not found.")
         }
@@ -94,17 +84,5 @@ export default class userController {
         console.log(`Could not create login user: ${error}`);
     }
 
-    }
-
-    static async logout(req: express.Request, res: express.Response) {
-
-        try {
-            res.send("User has been logged out successfully")
-        } 
-        catch(error) {
-            res.status(500).send(`Could not logout user: ${error}`);
-            console.log(`Could not logout user: ${error}`);
-        }
-        
     }
 }

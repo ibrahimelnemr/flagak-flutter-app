@@ -1,9 +1,8 @@
-import express from "express";
 import { Product, IProduct } from "../models/product";
 import mongoose from "mongoose";
 
 export class productDao {
-    async viewAllProducts() {
+    static async viewAllProducts() {
         try {
             const products = await Product.find();
             console.log(`viewAllProducts: found ${products.length} products`);
@@ -13,7 +12,7 @@ export class productDao {
         }
     }
 
-    async viewProduct(name: string) {
+    static async viewProduct(name: string) {
         try {
             const product = Product.findOne({ name: name });
             console.log(`Product: ${product}`);
@@ -23,7 +22,7 @@ export class productDao {
         }
     }
 
-    async createProduct(name: string, description: string, price: number) {
+    static async createProduct(name: string, description: string, price: number) {
         const newProduct = new Product({
             name: name,
             description: description,
@@ -37,7 +36,7 @@ export class productDao {
         }
     }
 
-    async editProduct(
+    static async editProduct(
         id: string,
         name: string,
         description: string,

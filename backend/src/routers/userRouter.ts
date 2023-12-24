@@ -4,8 +4,10 @@ import utils from "../utils/utils";
 
 const userRouter = express.Router();
 
+// register
 userRouter.post("/register", userController.register);
+
+// login
 userRouter.post("/login", userController.login);
-userRouter.post("/logout", utils.verifyAuthToken, userController.logout);
 
 export default userRouter;

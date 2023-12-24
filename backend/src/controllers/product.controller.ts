@@ -1,11 +1,9 @@
 import express from "express";
 import productDao from "../dao/productDao";
 
-const dao = new productDao();
-
-export class productController {
+export default class productController {
     static async viewAllProducts(req: express.Request, res: express.Response) {
-        const products = await dao.viewAllProducts();
+        const products = await productDao.viewAllProducts();
         res.json(products);
     }
 
@@ -18,7 +16,7 @@ export class productController {
                     .send("viewProduct router: invalid input.");
             }
 
-            const product = await dao.viewProduct(name);
+            const product = await productDao.viewProduct(name);
             res.send(product);
         } catch (error) {
             res.send(`viewProduct router: could not view product: ${error}`);
@@ -42,7 +40,7 @@ export class productController {
                     .send("Could not add product: invalid input.");
             }
 
-            await dao.createProduct(name, description, price);
+            await productDao.createProduct(name, description, price);
             res.send(
                 `Product created successfully with name: ${name}, description: ${description} and price: ${price}.`,
             );
@@ -73,7 +71,7 @@ export class productController {
                     .send("Could not edit product: invalid input.");
             }
 
-            await dao.editProduct(id, name, description, price);
+            await productDao.editProduct(id, name, description, price);
 
             res.send(
                 `Product edited successfully with name: ${name}, description: ${description} and price: ${price}.`,
