@@ -1,16 +1,13 @@
-import 'dart:convert';
-import 'package:frontend/env.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:frontend/services/api_service.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
-class RegisterPage extends StatefulWidget {
+class RegisterView extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _RegisterViewState createState() => _RegisterViewState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterViewState extends State<RegisterView> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -80,55 +77,22 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-
               // take the data from the form and make an http request
 
               onPressed: () async {
-                print('Full Name: ${fullNameController.text}');
-                print('Email Address: ${emailController.text}');
-                print('Password: ${passwordController.text}');
-                print('Is Admin: $isAdmin');
 
-//                dotenv.load();
-
-                // final apiEndpoint = dotenv.env['API_ENDPOINT'];
-                // final apiEndpoint = Environment.apiEndpoint;
-
-
-                // if (apiEndpoint == null) {
-                //   print('API_ENDPOINT not defined in .env file');
-                //   return;
-                // }
-
-                Map<String, dynamic> requestBody = {
-                  'name': fullNameController.text,
-                  'email': emailController.text,
-                  'password': passwordController.text,
-                  'is_admin': isAdmin
-                };
-
-                String jsonBody = jsonEncode(requestBody);
-
-                final response = await http.post(
-                  Uri.parse('http://127.0.0.1:3000/users/register'),
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: jsonBody,
-                );
-
-                print(jsonBody);
-
-                if (response.statusCode == 200) {
-                  print("User registered successfully");
+                try {
+                  final response = await ApiService.registerUser(
+                    name: fullNameController.text,
+                    email: emailController.text,
+                    password: passwordController.text,
+                    isAdmin: isAdmin,
+                  );
+                  print("Registration successful: $response");
                 }
-
-                else {
-                  print("Failed to register user; status code: ${response.statusCode}");
-                  print("Response body: ${response.body}");
+                catch (error) {
+                  print("Error registering user: $error");
                 }
-
-
               },
               child: Text('Register'),
             ),
