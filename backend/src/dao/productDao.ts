@@ -22,12 +22,12 @@ export class productDao {
         }
     }
 
-    static async createProduct(name: string, description: string, price: number, admin_id: string) {
+    static async createProduct(name: string, description: string, price: number, user_id: string) {
         const newProduct = new Product({
             name: name,
             description: description,
             price: price,
-            admin_id: admin_id
+            user_id: user_id
         });
         try {
             const newProductAdded = await newProduct.save();

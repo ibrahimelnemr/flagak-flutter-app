@@ -84,7 +84,7 @@ class _MainViewState extends State<MainView> {
           } else if (snapshot.hasError) {
             print("Error displaying products in main view: ${snapshot.error}");
             return Center(
-              child: Text('Error displaying products: ${snapshot.error}'),
+              child: Text('Error displaying products in main view: ${snapshot.error}'),
             );
           }
 

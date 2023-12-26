@@ -28,12 +28,12 @@ export default class productController {
             const name = req.body.name;
             const description = req.body.description;
             const price = req.body.price;
-            const admin_id = req.body.admin_id;
+            const user_id = req.body.user_id;
 
             let errorMessage = "";
 
-            if (typeof admin_id !== "string") 
-                errorMessage += `Invalid value for admin_id: ${admin_id}`;
+            if (typeof user_id !== "string") 
+                errorMessage += `Invalid value for user_id: ${user_id}`;
             if (typeof name !== "string") 
                 errorMessage += `Invalid value for product name: ${name}`;
             if (typeof description !== "string") 
@@ -46,7 +46,7 @@ export default class productController {
                     .status(400)
                     .send(`Could not create product; invalid input: ${errorMessage}`);
 
-            const newProduct = await productDao.createProduct(name, description, price, admin_id);
+            const newProduct = await productDao.createProduct(name, description, price, user_id);
             res.status(200).send({
                 message: `Product created successfully with name: ${name}, description: ${description} and price: ${price}.`,
                 product: newProduct

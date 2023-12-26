@@ -96,7 +96,9 @@ class ApiService {
   static Future<List<Product>> getAllProducts({required bool isAdmin}) async {
     // GET THE AUTH TOKEN
     String? authToken = await _secureStorage.read(key: 'auth_token');
-    String? adminId = await _secureStorage.read(key: 'user_id');
+    String? userId = await _secureStorage.read(key: 'user_id');
+
+    print("Auth token: $authToken, userId: $userId");
 
     if (authToken == null) {
       print("Error retrieving products: authentication token not found");
@@ -118,7 +120,7 @@ class ApiService {
                 product['name'] != null
                 && product['price'] != null
                 && product['description'] != null
-                && product['admin_id'] ==  adminId
+                && product['user_id'] ==  userId
             )
             .map((product) => Product.fromJson(product))
             .toList();
@@ -137,7 +139,7 @@ class ApiService {
 
             return products;
       }
-      
+
     } else {
       print(
           "Failed to fetch products. Response body: ${response.body}. Status code: ${response.statusCode}");
@@ -151,9 +153,9 @@ class ApiService {
       {required String name,
       required String description,
       required double price,
-      required String adminId}) async {
+      required String userId}) async {
     String? authToken = await _secureStorage.read(key: 'auth_token');
-    String? adminId = await _secureStorage.read(key: 'user_id');
+    String? userId = await _secureStorage.read(key: 'user_id');
 
     if (authToken == null) {
       print("Error: authentication token not found");
@@ -170,7 +172,7 @@ class ApiService {
         'name': name,
         'description': description,
         'price': price,
-        'admin_id': adminId
+        'user_id': userId
       }),
     );
 

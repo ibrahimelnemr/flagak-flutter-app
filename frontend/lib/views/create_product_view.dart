@@ -28,7 +28,7 @@ class _CreateProductViewState extends State<CreateProductView> {
         name: nameController.text,
         description: descriptionController.text,
         price: double.tryParse(priceController.text) ?? 0.0,
-        adminId: userId
+        userId: userId
       );
 
       

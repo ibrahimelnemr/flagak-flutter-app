@@ -4,9 +4,9 @@ class Product {
   final String name;
   final double price;
   final String description;
-  final String adminId;
+  final String userId;
 
-  Product({required this.productId, required this.name, required this.price, required this.description, required this.adminId});
+  Product({required this.productId, required this.name, required this.price, required this.description, required this.userId});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -14,7 +14,7 @@ class Product {
       name: json['name'],
       price: json['price'].toDouble(),
       description: json['description'],
-      adminId: json['admin_id'],
+      userId: json['user_id'],
     );
   }
 }
