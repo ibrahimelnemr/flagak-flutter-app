@@ -65,7 +65,7 @@ export default class userController {
 
         const userFound = await userDao.login(email, password_raw);
 
-        console.log(`user found: ${userFound}`)
+        console.log(`user found for login: ${userFound}`)
 
         const password_hash = bcrypt.hashSync(password_raw+bcryptPepper, parseInt(bcryptSaltRounds as string));
 
@@ -81,7 +81,8 @@ export default class userController {
                 jwtSecretKey as jwt.Secret)
 
             res.send({
-                token: token
+                token: token,
+                user: userFound
             });
 
             console.log(`User added successfully with token ${token}`)

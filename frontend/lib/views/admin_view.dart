@@ -16,7 +16,7 @@ class _AdminViewState extends State<AdminView> {
   @override
   void initState() {
     super.initState();
-    futureProducts = ApiService.getAllProducts();
+    futureProducts = ApiService.getAllProducts(isAdmin: true);
   }
 
   void _editProduct(Product product) {

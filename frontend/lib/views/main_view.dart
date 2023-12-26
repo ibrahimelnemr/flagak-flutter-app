@@ -13,7 +13,7 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
-    futureProducts = ApiService.getAllProducts();
+    futureProducts = ApiService.getAllProducts(isAdmin: false);
   }
 
   void _logout() async {

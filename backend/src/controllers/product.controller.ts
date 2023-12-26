@@ -28,27 +28,28 @@ export default class productController {
             const name = req.body.name;
             const description = req.body.description;
             const price = req.body.price;
+            const admin_id = req.body.admin_id;
 
-            if (
-                typeof name !== "string" ||
-                typeof description !== "string" ||
-                typeof price !== "number" ||
-                isNaN(price)
-            ) {
+            let errorMessage = "";
+
+            if (typeof admin_id !== "string") 
+                errorMessage += `Invalid value for admin_id: ${admin_id}`;
+            if (typeof name !== "string") 
+                errorMessage += `Invalid value for product name: ${name}`;
+            if (typeof description !== "string") 
+                errorMessage += `Invalid value for product description: ${description}`;
+            if (typeof price !== "number" || isNaN(price)) 
+                errorMessage += `Invalid value for product price: ${price}`;
+            
+            if (errorMessage != "")
                 return res
                     .status(400)
-                    .send("Could not add product: invalid input.");
-            }
+                    .send(`Could not create product; invalid input: ${errorMessage}`);
 
-            const newProduct = await productDao.createProduct(name, description, price);
+            const newProduct = await productDao.createProduct(name, description, price, admin_id);
             res.status(200).send({
                 message: `Product created successfully with name: ${name}, description: ${description} and price: ${price}.`,
-                product: {
-                    id: newProduct?._id,
-                    name: newProduct?.name,
-                    price: newProduct?.price,
-                    description: newProduct?.description,
-                }
+                product: newProduct
             });
             res.send(
                 

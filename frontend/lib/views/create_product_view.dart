@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
+import 'package:frontend/services/product.dart';
 
 class CreateProductView extends StatefulWidget {
+  
+  //final Product product;
+
+  CreateProductView(/*{required this.product}*/);
+
   @override
   _CreateProductViewState createState() => _CreateProductViewState();
 }
@@ -11,17 +17,21 @@ class _CreateProductViewState extends State<CreateProductView> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
 
-  // Function to handle creating a new product
+  
   void _createProduct() async {
+
+    final userId = await ApiService.getUserId();
+    
     try {
-      // Call the API to create a new product
+      
       await ApiService.createProduct(
         name: nameController.text,
         description: descriptionController.text,
         price: double.tryParse(priceController.text) ?? 0.0,
+        adminId: userId
       );
 
-      // Display a success message
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Product created successfully!'),
@@ -29,10 +39,10 @@ class _CreateProductViewState extends State<CreateProductView> {
         ),
       );
 
-      // Navigate back to the admin page
+      
       Navigator.pop(context);
     } catch (e) {
-      // Display an error message if product creation fails
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to create product. Check your input.'),

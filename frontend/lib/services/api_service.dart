@@ -66,8 +66,14 @@ class ApiService {
       await _secureStorage.write(
           key: 'auth_token', value: responseData['token']);
 
+      await _secureStorage.write(
+        key: 'user_id',
+        value: responseData['user']['_id'],
+      );
+
       print('Login successful');
       Map<String, String> allAuthTokens = await _secureStorage.readAll();
+
       allAuthTokens.forEach((key, value) {
         print('Key: $key, Value: $value');
       });
@@ -87,32 +93,51 @@ class ApiService {
   }
 
   // get all products
-  static Future<List<Product>> getAllProducts() async {
-
+  static Future<List<Product>> getAllProducts({required bool isAdmin}) async {
     // GET THE AUTH TOKEN
     String? authToken = await _secureStorage.read(key: 'auth_token');
+    String? adminId = await _secureStorage.read(key: 'user_id');
 
     if (authToken == null) {
       print("Error retrieving products: authentication token not found");
       throw Exception("Auth token not found");
     }
 
-    final response = await http.get(Uri.parse('$apiEndpoint$viewAllProductsPath'),
+    final response = await http.get(
+        Uri.parse('$apiEndpoint$viewAllProductsPath'),
         headers: {'Authorization': 'Bearer $authToken'});
 
     if (response.statusCode == 200) {
       // check that product contains name, price and description before returning
       Iterable jsonResponse = jsonDecode(response.body);
-      List<Product> products = jsonResponse
-          .where((product) =>
-         //     product['_id'] != null &&
-              product['name'] != null &&
-              product['price'] != null &&
-              product['description'] != null)
-          .map((product) => Product.fromJson(product))
-          .toList();
 
-      return products;
+      if (isAdmin) {
+        print("Fetching admin products only");
+           List<Product> products = jsonResponse
+            .where((product) =>
+                product['name'] != null
+                && product['price'] != null
+                && product['description'] != null
+                && product['admin_id'] ==  adminId
+            )
+            .map((product) => Product.fromJson(product))
+            .toList();
+
+            return products;
+      } else {
+        print("Fetching all admin and non-admin products");
+        List<Product> products = jsonResponse
+            .where((product) =>
+                //     product['_id'] != null &&
+                product['name'] != null &&
+                product['price'] != null &&
+                product['description'] != null)
+            .map((product) => Product.fromJson(product))
+            .toList();
+
+            return products;
+      }
+      
     } else {
       print(
           "Failed to fetch products. Response body: ${response.body}. Status code: ${response.statusCode}");
@@ -122,13 +147,13 @@ class ApiService {
   }
 
   // create product
-  static Future<void> createProduct({
-    required String name,
-    required String description,
-    required double price,
-  }) async {
-
+  static Future<void> createProduct(
+      {required String name,
+      required String description,
+      required double price,
+      required String adminId}) async {
     String? authToken = await _secureStorage.read(key: 'auth_token');
+    String? adminId = await _secureStorage.read(key: 'user_id');
 
     if (authToken == null) {
       print("Error: authentication token not found");
@@ -144,12 +169,14 @@ class ApiService {
       body: jsonEncode({
         'name': name,
         'description': description,
-        'price': price
+        'price': price,
+        'admin_id': adminId
       }),
     );
 
     if (response.statusCode == 200) {
-      print("Product created successfully. Server response body: ${response.body}");
+      print(
+          "Product created successfully. Server response body: ${response.body}");
       return jsonDecode(response.body);
     } else {
       print(
@@ -161,13 +188,12 @@ class ApiService {
 
   // edit product
 
-    static Future<void> editProduct({
+  static Future<void> editProduct({
     required String productId,
     required String name,
     required String description,
     required double price,
   }) async {
-
     String? authToken = await _secureStorage.read(key: 'auth_token');
 
     if (authToken == null) {
@@ -182,7 +208,7 @@ class ApiService {
         'Authorization': 'Bearer $authToken',
       },
       body: jsonEncode({
-       '_id': productId,
+        '_id': productId,
         'name': name,
         'description': description,
         'price': price
@@ -192,11 +218,20 @@ class ApiService {
     if (response.statusCode == 200) {
       print("Product edited successfully");
     } else {
-      print("Failed to edit product. Response body: ${response.body}. Status code: ${response.statusCode}");
-      throw Exception("Failed to edit product; status code: ${response.statusCode}");
+      print(
+          "Failed to edit product. Response body: ${response.body}. Status code: ${response.statusCode}");
+      throw Exception(
+          "Failed to edit product; status code: ${response.statusCode}");
     }
   }
-  
+
+  // get authorization headers with stored token
+
+  static Future<String> getUserId() async {
+    final String? userId = await _secureStorage.read(key: 'user_id');
+    print("User Id found: $userId");
+    return '$userId';
+  }
 
   // get authorization headers with stored token
   static Future<Map<String, String>> getAuthHeaders() async {
@@ -204,4 +239,3 @@ class ApiService {
     return {'Authorization': 'Bearer $authToken'};
   }
 }
-
