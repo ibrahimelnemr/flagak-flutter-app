@@ -32,10 +32,20 @@ export default class userController {
 
             const password_hash = bcrypt.hashSync(password+bcryptPepper, parseInt(bcryptSaltRounds as string));
 
-            await userDao.register(name, email, password_hash, is_admin);
-            res.send(`User registered successfully with email: ${email}.`);
+            const newUser = await userDao.register(name, email, password_hash, is_admin);
+            //console.log(newUser);
+            res.status(200)
+            res.json({
+                message: `User registered successfully with email: ${email}.`,
+                user: {
+                    id: newUser?._id,
+                    name: name,
+                    email: email,
+                }
+            });
         } catch (error) {
-            res.status(500).send(`Could not register user: ${error}`);
+            res.status(500)
+            //res.send(`Could not register user: ${error}`);
             console.log(`Could not create register user: ${error}`);
         }
     }
@@ -70,7 +80,9 @@ export default class userController {
                 user: userFound},
                 jwtSecretKey as jwt.Secret)
 
-            res.json(token)
+            res.send({
+                token: token
+            });
 
             console.log(`User added successfully with token ${token}`)
 

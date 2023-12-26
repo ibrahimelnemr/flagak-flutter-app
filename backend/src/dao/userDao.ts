@@ -14,8 +14,9 @@ export class userDao {
             is_admin: is_admin,
         });
         try {
-            await newUser.save();
+            const newUserAdded = await newUser.save();
             console.log(`User ${name} added to database successfully.`);
+            return newUserAdded;
         } catch (error) {
             console.log(`Error registering user: ${error}`);
         }

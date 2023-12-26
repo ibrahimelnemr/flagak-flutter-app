@@ -89,9 +89,24 @@ class _RegisterViewState extends State<RegisterView> {
                     isAdmin: isAdmin,
                   );
                   print("Registration successful: $response");
+
+                  // success message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Register Successful!'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                 }
                 catch (error) {
                   print("Error registering user: $error");
+                  // error message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Register was not successful: $error'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                 }
               },
               child: Text('Register'),

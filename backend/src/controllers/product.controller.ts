@@ -40,9 +40,18 @@ export default class productController {
                     .send("Could not add product: invalid input.");
             }
 
-            await productDao.createProduct(name, description, price);
+            const newProduct = await productDao.createProduct(name, description, price);
+            res.status(200).send({
+                message: `Product created successfully with name: ${name}, description: ${description} and price: ${price}.`,
+                product: {
+                    id: newProduct?._id,
+                    name: newProduct?.name,
+                    price: newProduct?.price,
+                    description: newProduct?.description,
+                }
+            });
             res.send(
-                `Product created successfully with name: ${name}, description: ${description} and price: ${price}.`,
+                
             );
         } catch (error) {
             res.status(500).send(
@@ -54,14 +63,14 @@ export default class productController {
 
     static async editProduct(req: express.Request, res: express.Response) {
         try {
-            const id = req.body._id;
+            //const id = req.body._id;
             const name = req.body.name;
             const description = req.body.description;
             const price = req.body.price;
 
             if (
                 typeof name !== "string" ||
-                typeof id !== "string" ||
+                //typeof id !== "string" ||
                 typeof description !== "string" ||
                 typeof price !== "number" ||
                 isNaN(price)
@@ -71,11 +80,11 @@ export default class productController {
                     .send("Could not edit product: invalid input.");
             }
 
-            await productDao.editProduct(id, name, description, price);
+            await productDao.editProduct(/*id, */name, description, price);
 
-            res.send(
-                `Product edited successfully with name: ${name}, description: ${description} and price: ${price}.`,
-            );
+            res.send({
+                message: `Product edited successfully with name: ${name}, description: ${description} and price: ${price}.`
+            });
 
             console.log(
                 `Product edited successfully with name: ${name}, description: ${description} and price: ${price}.`,

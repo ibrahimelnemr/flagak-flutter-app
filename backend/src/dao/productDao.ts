@@ -29,22 +29,23 @@ export class productDao {
             price: price,
         });
         try {
-            await newProduct.save();
+            const newProductAdded = await newProduct.save();
             console.log(`Product ${name} added to database successfully.`);
+            return newProductAdded;
         } catch (error) {
             console.log(`Error adding product: ${error}`);
         }
     }
 
     static async editProduct(
-        id: string,
+        //id: string,
         name: string,
         description: string,
         price: number,
     ) {
         try {
             const updatedProduct = await Product.findOneAndUpdate(
-                { _id: new mongoose.Types.ObjectId(id) },
+                //{ _id: new mongoose.Types.ObjectId(id) },
                 {
                     name: name,
                     description: description,
