@@ -38,14 +38,14 @@ export class productDao {
     }
 
     static async editProduct(
-        //id: string,
+        id: string,
         name: string,
         description: string,
         price: number,
     ) {
         try {
             const updatedProduct = await Product.findOneAndUpdate(
-                //{ _id: new mongoose.Types.ObjectId(id) },
+                { _id: new mongoose.Types.ObjectId(id) },
                 {
                     name: name,
                     description: description,

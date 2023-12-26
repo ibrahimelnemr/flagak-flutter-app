@@ -3,14 +3,21 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const env = process.env.ENV as string;
+
 const mongodb_connection_string = process.env.URL as string;
 const mongodb_local_test_connection_string = process.env.LOCAL_TEST_URL as string;
 
-// connect to remote database
-//const uri = mongodb_connection_string;
+let uri = "";
 
-// connect to localhost database
-const uri = mongodb_local_test_connection_string;
+if (env == 'TEST_LOCAL') {
+    uri = mongodb_local_test_connection_string;
+    console.log("Connecting to local test database");
+}
+if (env == 'DEV') {
+    uri = mongodb_connection_string;
+    console.log("Connecting to development database");
+}
 
 export class database {
     async connectToMongoDB() {

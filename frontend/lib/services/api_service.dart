@@ -162,7 +162,7 @@ class ApiService {
   // edit product
 
     static Future<void> editProduct({
-    //required String id,
+    required String productId,
     required String name,
     required String description,
     required double price,
@@ -182,7 +182,7 @@ class ApiService {
         'Authorization': 'Bearer $authToken',
       },
       body: jsonEncode({
-       //'id': id,
+       '_id': productId,
         'name': name,
         'description': description,
         'price': price

@@ -63,24 +63,28 @@ export default class productController {
 
     static async editProduct(req: express.Request, res: express.Response) {
         try {
-            //const id = req.body._id;
+            const _id = req.body._id;
             const name = req.body.name;
             const description = req.body.description;
             const price = req.body.price;
 
-            if (
-                typeof name !== "string" ||
-                //typeof id !== "string" ||
-                typeof description !== "string" ||
-                typeof price !== "number" ||
-                isNaN(price)
-            ) {
+            let errorMessage = "";
+
+            if (typeof _id !== "string") 
+                errorMessage += `Invalid value for product _id: ${_id}`;
+            if (typeof name !== "string") 
+                errorMessage += `Invalid value for product name: ${name}`;
+            if (typeof description !== "string") 
+                errorMessage += `Invalid value for product description: ${description}`;
+            if (typeof price !== "number" || isNaN(price)) 
+                errorMessage += `Invalid value for product price: ${price}`;
+            
+            if (errorMessage != "")
                 return res
                     .status(400)
-                    .send("Could not edit product: invalid input.");
-            }
+                    .send(`Could not edit product; invalid input: ${errorMessage}`);
 
-            await productDao.editProduct(/*id, */name, description, price);
+            await productDao.editProduct(_id, name, description, price);
 
             res.send({
                 message: `Product edited successfully with name: ${name}, description: ${description} and price: ${price}.`

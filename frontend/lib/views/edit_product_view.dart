@@ -29,9 +29,15 @@ class _EditProductViewState extends State<EditProductView> {
   void _updateProduct() async {
     try {
 
+      var productId = widget.product.productId;
+      var name = nameController.text;
+      var description = descriptionController.text;
+      var price = priceController.text;
+
+      print("Attempting to edit product with id: $productId, name: $name, description: $description, price $price");
       
       await ApiService.editProduct(
-        //id: widget.product.id,
+        productId: widget.product.productId,
         name: nameController.text,
         description: descriptionController.text,
         price: double.tryParse(priceController.text) ?? 0.0,
