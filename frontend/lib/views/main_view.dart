@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
+import 'package:frontend/views/view_product_view.dart';
+
 
 class MainView extends StatefulWidget {
   @override
@@ -10,12 +12,15 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   late Future<List<Product>> futureProducts;
   final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
+  late Future<bool> isAdminFuture;
 
 
   @override
   void initState() {
     super.initState();
     futureProducts = ApiService.getAllProducts(isAdmin: false);
+    isAdminFuture = ApiService.isAdmin();
+
 
 
       ApiService.onProductUpdate = () {
@@ -66,8 +71,8 @@ class _MainViewState extends State<MainView> {
 
   }
 
-   void _viewProduct(Product product) {
-    if (isAdmin) {
+  Future<void> _viewProduct(Product product) async {
+    if (await isAdminFuture) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -95,13 +100,12 @@ class _MainViewState extends State<MainView> {
           Row(
             children: [
               IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: _refreshProducts,
-          ),
-          Text('Refresh'),
+              icon: Icon(Icons.refresh),
+              onPressed: _refreshProducts,
+            ),
+            Text('Refresh'),
             ],
           ),
-          
         ],
       ),
       body: FutureBuilder<List<Product>>(
@@ -122,14 +126,27 @@ class _MainViewState extends State<MainView> {
                         Text(products[index].description),
                       ],
                     ),
-                    trailing: isAdmin
-                  ? IconButton(
-                      icon: Icon(Icons.remove_red_eye),
-                      onPressed: () {
-                        _viewProduct(products[index]);
+                    trailing: FutureBuilder<bool>(
+                      future: isAdminFuture,
+                      builder: (context, isAdminSnapshot) {
+                        if (isAdminSnapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (isAdminSnapshot.hasData && isAdminSnapshot.data!) {
+                      
+                          return IconButton(
+                            icon: Icon(Icons.remove_red_eye),
+                            onPressed: () {
+                              _viewProduct(products[index]);
+                            },
+                          );
+                        } else {
+                          
+                          return SizedBox.shrink();
+                        }
                       },
-                    )
-                  : null,
+                    ),
+   
+
                   ),
 
                 );

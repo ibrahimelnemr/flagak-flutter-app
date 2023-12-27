@@ -18,6 +18,11 @@ class ApiService {
 
   // register user
 
+  static Future<bool> isAdmin() async {
+    String? isAdmin = await _secureStorage.read(key: 'user_is_admin');
+    return isAdmin == 'true';
+  }
+
   static Future<Map<String, dynamic>> registerUser(
       {required String name,
       required String email,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
+import 'package:frontend/views/view_product_view.dart';
 import 'create_product_view.dart';
 import 'edit_product_view.dart';
+
 
 
 class AdminView extends StatefulWidget {
@@ -30,8 +32,20 @@ class _AdminViewState extends State<AdminView> {
     });
   }
 
+  void _viewProduct(Product product) async {
+    if (await ApiService.isAdmin()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ViewProductView(product: product),
+        ),
+      );
+    }
+  }
+
+
   void _editProduct(Product product) {
-    // Navigate to EditProductView with product details
+    
     Navigator.push(
       context,
       MaterialPageRoute(
