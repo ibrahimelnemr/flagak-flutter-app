@@ -1,3 +1,4 @@
+// Add the following imports at the top
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
 
@@ -14,7 +15,10 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text(
+          'Login',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,48 +27,70 @@ class _LoginViewState extends State<LoginView> {
           children: [
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email Address'),
+              decoration: InputDecoration(
+                labelText: 'Email Address',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 16),
             TextField(
               controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(
+                labelText: 'Password',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
               obscureText: true,
             ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
                 try {
-                  // Call the login function from ApiService
                   final token = await ApiService.loginUser(
                     email: emailController.text,
                     password: passwordController.text,
                   );
 
-                  // success message
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Login Successful!'),
+                      content: Text(
+                        'Login Successful!',
+                        style: TextStyle(color: Colors.green),
+                      ),
                       duration: Duration(seconds: 2),
                     ),
                   );
-                  
-                  // navigate to main view upon successfull login
+
                   Navigator.pushReplacementNamed(context, '/main');
                 } catch (error) {
                   print("Error logging in: $error");
-                  // login error message
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Login Failed. Check your credentials.'),
+                      content: Text(
+                        'Login Failed. Check your credentials.',
+                        style: TextStyle(color: Colors.red),
+                      ),
                       duration: Duration(seconds: 2),
                     ),
                   );
-                  
                 }
               },
               child: Text('Login'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextButton(
+              onPressed: () {
+                // Navigate to the registration page
+                Navigator.pushReplacementNamed(context, '/register');
+              },
+              child: Text('Create Account'),
             ),
           ],
         ),

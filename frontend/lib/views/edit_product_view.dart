@@ -19,13 +19,12 @@ class _EditProductViewState extends State<EditProductView> {
   @override
   void initState() {
     super.initState();
-    
+
     nameController = TextEditingController(text: widget.product.name);
     descriptionController = TextEditingController(text: widget.product.description);
     priceController = TextEditingController(text: widget.product.price.toString());
   }
 
-  
   void _updateProduct() async {
     try {
 
@@ -46,22 +45,25 @@ class _EditProductViewState extends State<EditProductView> {
       if (ApiService.onProductUpdate != null) {
         ApiService.onProductUpdate!();
       }
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Product updated successfully!'),
+          content: Text(
+            'Product updated successfully!',
+            style: TextStyle(color: Colors.green),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
 
-
-    Navigator.of(context).pop(true);
-
+      Navigator.of(context).pop(true);
     } catch (e) {
-      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to update product. Check your input.'),
+          content: Text(
+            'Failed to update product. Check your input.',
+            style: TextStyle(color: Colors.red),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
@@ -72,7 +74,10 @@ class _EditProductViewState extends State<EditProductView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: Text(
+          'Edit Product',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -81,31 +86,51 @@ class _EditProductViewState extends State<EditProductView> {
           children: [
             TextField(
               controller: nameController,
-              decoration: InputDecoration(labelText: 'Product Name'),
+              decoration: InputDecoration(
+                labelText: 'Product Name',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
             ),
             SizedBox(height: 16),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Product Description'),
+              decoration: InputDecoration(
+                labelText: 'Product Description',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
             ),
             SizedBox(height: 16),
             TextField(
               controller: priceController,
-              decoration: InputDecoration(labelText: 'Product Price'),
+              decoration: InputDecoration(
+                labelText: 'Product Price',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: _updateProduct,
               child: Text('Confirm'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
             ),
             SizedBox(height: 16),
             TextButton(
               onPressed: () {
-                
                 Navigator.pop(context);
               },
-              child: Text('Back to Admin Page'),
+              child: Text(
+                'Back to Admin Page',
+                style: TextStyle(color: Colors.blue),
+              ),
             ),
           ],
         ),

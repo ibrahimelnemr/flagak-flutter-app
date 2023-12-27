@@ -17,35 +17,35 @@ class _CreateProductViewState extends State<CreateProductView> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
 
-  
   void _createProduct() async {
-
     final userId = await ApiService.getUserId();
-    
+
     try {
-      
       await ApiService.createProduct(
         name: nameController.text,
         description: descriptionController.text,
         price: double.tryParse(priceController.text) ?? 0.0,
-        userId: userId
+        userId: userId,
       );
 
-      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Product created successfully!'),
+          content: Text(
+            'Product created successfully!',
+            style: TextStyle(color: Colors.green),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
 
-      
       Navigator.of(context).pop(true);
     } catch (e) {
-      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to create product. Check your input.'),
+          content: Text(
+            'Failed to create product. Check your input.',
+            style: TextStyle(color: Colors.red),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
@@ -56,7 +56,10 @@ class _CreateProductViewState extends State<CreateProductView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Product'),
+        title: Text(
+          'Create Product',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,31 +68,51 @@ class _CreateProductViewState extends State<CreateProductView> {
           children: [
             TextField(
               controller: nameController,
-              decoration: InputDecoration(labelText: 'Product Name'),
+              decoration: InputDecoration(
+                labelText: 'Product Name',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
             ),
             SizedBox(height: 16),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Product Description'),
+              decoration: InputDecoration(
+                labelText: 'Product Description',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
             ),
             SizedBox(height: 16),
             TextField(
               controller: priceController,
-              decoration: InputDecoration(labelText: 'Product Price'),
+              decoration: InputDecoration(
+                labelText: 'Product Price',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: _createProduct,
               child: Text('Confirm'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
             ),
             SizedBox(height: 16),
             TextButton(
               onPressed: () {
-                // Navigate back to the admin page
                 Navigator.pop(context);
               },
-              child: Text('Back to Admin Page'),
+              child: Text(
+                'Back to Admin Page',
+                style: TextStyle(color: Colors.blue),
+              ),
             ),
           ],
         ),

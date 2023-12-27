@@ -7,10 +7,9 @@ import 'views/welcome_view.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
-  // await dotenv.load();
+// await dotenv.load();
   runApp(StartApp());
 }
-
 
 class StartApp extends StatelessWidget {
   @override
@@ -24,11 +23,32 @@ class StartApp extends StatelessWidget {
         '/main': (context) => AppScaffold(child: MainView()),
         '/admin': (context) => AppScaffold(child: AdminView()),
       },
+      theme: ThemeData(
+        primaryColor: Colors.blue, 
+        //accentColor: Colors.green, 
+        fontFamily: 'Sans-serif',
+        scaffoldBackgroundColor: Colors.grey[100], 
+        appBarTheme: AppBarTheme(
+          color: Colors.blue,
+          elevation: 0, 
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ), 
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.grey[200], 
+          selectedItemColor: Colors.black, 
+          unselectedItemColor: Colors.black, 
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.blue, 
+          textTheme: ButtonTextTheme.primary,
+        ),
+      ),
     );
   }
 }
-
-
 
 class AppScaffold extends StatefulWidget {
   final Widget child;
@@ -46,7 +66,13 @@ class _AppScaffoldState extends State<AppScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('App Title'),
+        title: Text(
+          'MyApp',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+            ),
+        ),
       ),
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
@@ -56,7 +82,7 @@ class _AppScaffoldState extends State<AppScaffold> {
             _currentIndex = index;
           });
 
-          // navigate 
+          // navigate
           switch (index) {
             case 0:
               Navigator.pushReplacementNamed(context, '/welcome');
@@ -92,7 +118,7 @@ class _AppScaffoldState extends State<AppScaffold> {
             label: 'Main',
           ),
         ],
-        backgroundColor: Colors.grey[200],
+backgroundColor: Colors.grey[200],
         selectedItemColor: Colors.black, 
         unselectedItemColor: Colors.black, 
         // selectedIconTheme: IconThemeData(color: Colors.white),

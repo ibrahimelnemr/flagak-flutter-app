@@ -5,8 +5,6 @@ import 'package:frontend/views/view_product_view.dart';
 import 'create_product_view.dart';
 import 'edit_product_view.dart';
 
-
-
 class AdminView extends StatefulWidget {
   @override
   _AdminViewState createState() => _AdminViewState();
@@ -28,7 +26,6 @@ class _AdminViewState extends State<AdminView> {
   void _refreshProducts() {
     setState(() {
       futureProducts = ApiService.getAllProducts(isAdmin: true);
-
     });
   }
 
@@ -43,9 +40,7 @@ class _AdminViewState extends State<AdminView> {
     }
   }
 
-
   void _editProduct(Product product) {
-    
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -55,7 +50,7 @@ class _AdminViewState extends State<AdminView> {
   }
 
   void _createProduct() {
-    // Navigate to CreateProductView
+// Navigate to CreateProductView
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -68,7 +63,10 @@ class _AdminViewState extends State<AdminView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin View'),
+        title: Text(
+          'Admin View',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
@@ -80,20 +78,44 @@ class _AdminViewState extends State<AdminView> {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    title: Text(products[index].name),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('\$${products[index].price.toStringAsFixed(2)}'),
-                        Text(products[index].description),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        _editProduct(products[index]);
-                      },
-                    ),
+                  title: Text(products[index].name),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '\$${products[index].price.toStringAsFixed(2)}',
+                        style: TextStyle(color: Colors.green),
+                      ),
+                      Text(products[index].description),
+                    ],
+                  ),
+
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.orange,
+                        ),
+                        onPressed: () {
+                          _editProduct(products[index]);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: Colors.blue,
+                        ),
+                        onPressed: () {
+                          _viewProduct(products[index]);
+                        },
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    _editProduct(products[index]);
+                  },
                   ),
                 );
               },
@@ -101,7 +123,10 @@ class _AdminViewState extends State<AdminView> {
           } else if (snapshot.hasError) {
             print("Error: ${snapshot.error}");
             return Center(
-              child: Text('Error: ${snapshot.error}'),
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(color: Colors.red),
+              ),
             );
           }
 

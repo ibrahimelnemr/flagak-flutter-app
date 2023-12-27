@@ -12,14 +12,14 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   late Future<List<Product>> futureProducts;
   final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
-  late Future<bool> isAdminFuture;
+late Future<bool> isAdminFuture;
 
 
   @override
   void initState() {
     super.initState();
     futureProducts = ApiService.getAllProducts(isAdmin: false);
-    isAdminFuture = ApiService.isAdmin();
+isAdminFuture = ApiService.isAdmin();
 
 
 
@@ -97,7 +97,7 @@ class _MainViewState extends State<MainView> {
               Text('Logout'),
             ],
           ),
-          Row(
+Row(
             children: [
               IconButton(
               icon: Icon(Icons.refresh),
@@ -126,7 +126,7 @@ class _MainViewState extends State<MainView> {
                         Text(products[index].description),
                       ],
                     ),
-                    trailing: FutureBuilder<bool>(
+                  trailing: FutureBuilder<bool>(
                       future: isAdminFuture,
                       builder: (context, isAdminSnapshot) {
                         if (isAdminSnapshot.connectionState == ConnectionState.waiting) {

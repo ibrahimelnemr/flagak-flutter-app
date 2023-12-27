@@ -3,20 +3,27 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const env = process.env.ENV as string;
+const env = process.env.ENVIRONMENT as string;
+
+console.log(`Current environment: ${env}`)
 
 const mongodb_connection_string = process.env.URL as string;
 const mongodb_local_test_connection_string = process.env.LOCAL_TEST_URL as string;
 
 let uri = "";
 
-if (env == 'TEST_LOCAL') {
+if (env == 'TEST') {
     uri = mongodb_local_test_connection_string;
+    console.log(`Connection string: ${uri}`);
     console.log("Connecting to local test database");
 }
 if (env == 'DEV') {
     uri = mongodb_connection_string;
     console.log("Connecting to development database");
+    console.log(`Connection string: ${uri}`);
+}
+else {
+    console.log("Could not configure test or development database environment");
 }
 
 export class database {

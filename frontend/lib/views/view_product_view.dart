@@ -10,16 +10,36 @@ class ViewProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Product'),
+        title: Text(
+          'Product Details',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Product Name: ${product.name}'),
-            Text('Price: \$${product.price.toStringAsFixed(2)}'),
-            Text('Description: ${product.description}'),
+            Text(
+              product.name,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              '\$${product.price.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.green,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              product.description,
+              style: TextStyle(fontSize: 16),
+            ),
           ],
         ),
       ),

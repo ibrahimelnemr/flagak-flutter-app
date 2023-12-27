@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RegisterView extends StatefulWidget {
   @override
@@ -8,16 +7,19 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  TextEditingController fullNameController = TextEditingController();
+TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool isAdmin = false;
+bool isAdmin = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: Text(
+          'Register',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -26,21 +28,36 @@ class _RegisterViewState extends State<RegisterView> {
           children: [
             TextField(
               controller: fullNameController,
-              decoration: InputDecoration(labelText: 'Full Name'),
+              decoration: InputDecoration(
+                labelText: 'Full Name',
+                  focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+                ),
             ),
             SizedBox(height: 16),
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email Address'),
+              decoration: InputDecoration(
+                labelText: 'Email Address',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 16),
             TextField(
               controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(
+                labelText: 'Password',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
               obscureText: true,
             ),
-            SizedBox(height: 16),
+SizedBox(height: 16),
             Row(
               children: [
                 Text('Account Type:'),
@@ -77,30 +94,29 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              // take the data from the form and make an http request
-
               onPressed: () async {
-
                 try {
                   final response = await ApiService.registerUser(
-                    name: fullNameController.text,
+name: fullNameController.text,
                     email: emailController.text,
                     password: passwordController.text,
-                    isAdmin: isAdmin,
+isAdmin: isAdmin,
                   );
-                  print("Registration successful: $response");
+print("Registration successful: $response");
 
-                  // success message
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Register Successful!'),
+                      content: Text(
+                        'Registration Successful!',
+                        style: TextStyle(color: Colors.green),
+                      ),
                       duration: Duration(seconds: 2),
                     ),
                   );
-                }
+}
                 catch (error) {
                   print("Error registering user: $error");
-                  // error message
+// error message
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Register was not successful: $error'),
@@ -110,6 +126,9 @@ class _RegisterViewState extends State<RegisterView> {
                 }
               },
               child: Text('Register'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
             ),
           ],
         ),
