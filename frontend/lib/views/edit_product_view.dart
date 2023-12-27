@@ -43,6 +43,9 @@ class _EditProductViewState extends State<EditProductView> {
         price: double.tryParse(priceController.text) ?? 0.0,
       );
 
+      if (ApiService.onProductUpdate != null) {
+        ApiService.onProductUpdate!();
+      }
       
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -52,7 +55,8 @@ class _EditProductViewState extends State<EditProductView> {
       );
 
 
-      Navigator.pop(context);
+    Navigator.of(context).pop(true);
+
     } catch (e) {
       
       ScaffoldMessenger.of(context).showSnackBar(

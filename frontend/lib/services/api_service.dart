@@ -14,6 +14,8 @@ class ApiService {
 
   static final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
+  static Function()? onProductUpdate;
+
   // register user
 
   static Future<Map<String, dynamic>> registerUser(
@@ -70,6 +72,24 @@ class ApiService {
         key: 'user_id',
         value: responseData['user']['_id'],
       );
+
+      await _secureStorage.write(
+        key: 'user_name',
+        value: responseData['user']['name'],
+      );
+
+      await _secureStorage.write(
+        key: 'user_email',
+        value: responseData['user']['email'],
+      );
+
+
+      // store is_admin as string "true" or "false"
+      await _secureStorage.write(
+        key: 'user_is_admin',
+        value: responseData['user']['is_admin'].toString(),
+      );
+
 
       print('Login successful');
       Map<String, String> allAuthTokens = await _secureStorage.readAll();
@@ -179,6 +199,9 @@ class ApiService {
     if (response.statusCode == 200) {
       print(
           "Product created successfully. Server response body: ${response.body}");
+      if (onProductUpdate != null) {
+      onProductUpdate!();
+    }
       return jsonDecode(response.body);
     } else {
       print(
@@ -219,6 +242,9 @@ class ApiService {
 
     if (response.statusCode == 200) {
       print("Product edited successfully");
+      if (onProductUpdate != null) {
+      onProductUpdate!();
+    }
     } else {
       print(
           "Failed to edit product. Response body: ${response.body}. Status code: ${response.statusCode}");

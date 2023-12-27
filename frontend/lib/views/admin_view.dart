@@ -17,6 +17,17 @@ class _AdminViewState extends State<AdminView> {
   void initState() {
     super.initState();
     futureProducts = ApiService.getAllProducts(isAdmin: true);
+
+    ApiService.onProductUpdate = () {
+      _refreshProducts();
+    };
+  }
+
+  void _refreshProducts() {
+    setState(() {
+      futureProducts = ApiService.getAllProducts(isAdmin: true);
+
+    });
   }
 
   void _editProduct(Product product) {

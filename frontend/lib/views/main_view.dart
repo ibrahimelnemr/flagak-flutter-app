@@ -9,11 +9,30 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   late Future<List<Product>> futureProducts;
+  final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
+
 
   @override
   void initState() {
     super.initState();
     futureProducts = ApiService.getAllProducts(isAdmin: false);
+
+
+      ApiService.onProductUpdate = () {
+      _refreshProducts();
+    };
+
+  }
+
+  void refreshProducts() {
+    _refreshProducts();
+  }
+
+  void _refreshProducts() {
+    setState(() {
+      futureProducts = ApiService.getAllProducts(isAdmin: true);
+
+    });
   }
 
   void _logout() async {
@@ -26,6 +45,7 @@ class _MainViewState extends State<MainView> {
           duration: Duration(seconds: 2),
         ),
       );
+      ApiService.onProductUpdate = null;
       Navigator.pushReplacementNamed(context, '/login');
     } catch (error) {
       print("Error logging out: $error");
@@ -40,6 +60,21 @@ class _MainViewState extends State<MainView> {
 
   void _navigateToAdminView() {
     Navigator.pushNamed(context, '/admin');
+    _refreshProducts();
+
+    (_mainViewKey.currentState as _MainViewState).refreshProducts();
+
+  }
+
+   void _viewProduct(Product product) {
+    if (isAdmin) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ViewProductView(product: product),
+        ),
+      );
+    }
   }
 
   @override
@@ -57,6 +92,16 @@ class _MainViewState extends State<MainView> {
               Text('Logout'),
             ],
           ),
+          Row(
+            children: [
+              IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: _refreshProducts,
+          ),
+          Text('Refresh'),
+            ],
+          ),
+          
         ],
       ),
       body: FutureBuilder<List<Product>>(
@@ -77,7 +122,16 @@ class _MainViewState extends State<MainView> {
                         Text(products[index].description),
                       ],
                     ),
+                    trailing: isAdmin
+                  ? IconButton(
+                      icon: Icon(Icons.remove_red_eye),
+                      onPressed: () {
+                        _viewProduct(products[index]);
+                      },
+                    )
+                  : null,
                   ),
+
                 );
               },
             );

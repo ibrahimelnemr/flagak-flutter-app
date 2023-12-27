@@ -40,7 +40,7 @@ class _CreateProductViewState extends State<CreateProductView> {
       );
 
       
-      Navigator.pop(context);
+      Navigator.of(context).pop(true);
     } catch (e) {
       
       ScaffoldMessenger.of(context).showSnackBar(
