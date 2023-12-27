@@ -3,7 +3,6 @@ import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
 import 'package:frontend/views/view_product_view.dart';
 
-
 class MainView extends StatefulWidget {
   @override
   _MainViewState createState() => _MainViewState();
@@ -11,19 +10,16 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   late Future<List<Product>> futureProducts;
-  final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
-late Future<bool> isAdminFuture;
-
+final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
+  late Future<bool> isAdminFuture;
 
   @override
   void initState() {
     super.initState();
     futureProducts = ApiService.getAllProducts(isAdmin: false);
-isAdminFuture = ApiService.isAdmin();
+    isAdminFuture = ApiService.isAdmin();
 
-
-
-      ApiService.onProductUpdate = () {
+    ApiService.onProductUpdate = () {
       _refreshProducts();
     };
 
@@ -36,17 +32,19 @@ isAdminFuture = ApiService.isAdmin();
   void _refreshProducts() {
     setState(() {
       futureProducts = ApiService.getAllProducts(isAdmin: true);
-
     });
   }
 
   void _logout() async {
     try {
       await ApiService.logoutUser();
-      // Navigate to login screen after successful logout
+// Navigate to login screen after successful logout
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Logout successful!'),
+          content: Text(
+            'Logout successful!',
+            style: TextStyle(color: Colors.green),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
@@ -56,7 +54,10 @@ isAdminFuture = ApiService.isAdmin();
       print("Error logging out: $error");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error logging out: $error'),
+          content: Text(
+            'Error logging out: $error',
+            style: TextStyle(color: Colors.red),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
@@ -86,24 +87,35 @@ isAdminFuture = ApiService.isAdmin();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main'),
+        title: Text(
+          'Main',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: [
           Row(
             children: [
               IconButton(
                 icon: Icon(Icons.exit_to_app),
                 onPressed: _logout,
+                color: Colors.blue,
               ),
-              Text('Logout'),
+              Text(
+                'Logout',
+                style: TextStyle(color: Colors.blue),
+              ),
             ],
           ),
-Row(
+          Row(
             children: [
               IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: _refreshProducts,
-            ),
-            Text('Refresh'),
+                icon: Icon(Icons.refresh),
+                onPressed: _refreshProducts,
+                color: Colors.blue,
+              ),
+              Text(
+                'Refresh',
+                style: TextStyle(color: Colors.blue),
+              ),
             ],
           ),
         ],
@@ -118,37 +130,41 @@ Row(
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    title: Text(products[index].name),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('\$${products[index].price.toStringAsFixed(2)}'),
-                        Text(products[index].description),
-                      ],
-                    ),
-                  trailing: FutureBuilder<bool>(
-                      future: isAdminFuture,
-                      builder: (context, isAdminSnapshot) {
-                        if (isAdminSnapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (isAdminSnapshot.hasData && isAdminSnapshot.data!) {
-                      
-                          return IconButton(
-                            icon: Icon(Icons.remove_red_eye),
-                            onPressed: () {
-                              _viewProduct(products[index]);
-                            },
-                          );
-                        } else {
-                          
-                          return SizedBox.shrink();
-                        }
-                      },
-                    ),
-   
-
+                  title: Text(products[index].name),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '\$${products[index].price.toStringAsFixed(2)}',
+                        style: TextStyle(color: Colors.green),
+                      ),
+                      Text(products[index].description),
+                    ],
                   ),
-
+                  trailing: FutureBuilder<bool>(
+                    future: isAdminFuture,
+                    builder: (context, isAdminSnapshot) {
+                      if (isAdminSnapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (isAdminSnapshot.hasData && isAdminSnapshot.data!) {
+                        return IconButton(
+                          icon: Icon(
+                            Icons.remove_red_eye,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            _viewProduct(products[index]);
+                          },
+                        );
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    },
+                  ),
+                  onTap: () {
+                    // Handle product tap
+                  },
+                ),
                 );
               },
             );
@@ -164,7 +180,7 @@ Row(
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
+floatingActionButton: FloatingActionButton.extended(
         onPressed: _navigateToAdminView,
         label: Text('Admin Page'),
         icon: Icon(Icons.admin_panel_settings),
