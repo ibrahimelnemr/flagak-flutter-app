@@ -1,7 +1,7 @@
 import userDao from "../dao/userDao";
 import express from "express";
 import dotenv from "dotenv";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 dotenv.config();

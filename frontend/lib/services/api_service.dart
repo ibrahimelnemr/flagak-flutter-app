@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiService {
-  static const String apiEndpoint = 'http://localhost:3000';
+  //static const String apiEndpoint = 'http://localhost:3000';
+  // elastic beanstalk hosted endpoint
+  static const String apiEndpoint = 'http://flagak-task-2-env.eba-v47pizxh.eu-north-1.elasticbeanstalk.com';
   static const String registerPath = '/users/register';
   static const String loginPath = '/users/login';
   static const String viewAllProductsPath = '/products';

@@ -7,6 +7,9 @@ Thumbs.db
 .env
 .pnp
 .pnp.js
+
+backend.zip
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

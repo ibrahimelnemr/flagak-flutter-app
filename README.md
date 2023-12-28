@@ -7,6 +7,7 @@ This repository contains a full-stack Flutter application with a backend built u
 * [Flutter Setup](#flutter-setup)
 * [API Endpoints](#api-endpoints)
 * [UI Prototype](#figma-ui-prototype)
+* [Elastic Beanstalk Deployment](#elastic-beanstalk-deployment)
 
 # Prerequisites
 
@@ -235,3 +236,7 @@ Authorization: Bearer ACCESS_TOKEN
 
 https://www.figma.com/file/Nje4m7yaF1D4q9yAmKaTGg/Flagak-App-Task
 
+
+# Elastic Beanstalk Deployment
+
+http://flagak-task-2-env.eba-v47pizxh.eu-north-1.elasticbeanstalk.com/
