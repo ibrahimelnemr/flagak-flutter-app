@@ -12,7 +12,8 @@ dotenv.config();
 // Constants
 export const app: express.Application = express();
 
-const PORT: string = "3000";
+//const PORT: string = "3000";
+const PORT: string = "8080";
 
 app.use(cors());
 app.use(bodyParser.json());
