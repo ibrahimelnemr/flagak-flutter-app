@@ -23,7 +23,9 @@ if (env == 'DEV') {
     console.log(`Connection string: ${uri}`);
 }
 else {
-    console.log("Could not configure test or development database environment");
+    console.log("Could not find environment variable for test or development database environment");
+    console.log("Defaulting to DEV database environment");
+    uri = mongodb_connection_string;
 }
 
 export class database {

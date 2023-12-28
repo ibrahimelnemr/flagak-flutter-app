@@ -13,7 +13,10 @@ dotenv.config();
 export const app: express.Application = express();
 
 //const PORT: string = "3000";
-const PORT: string = "8080";
+//const PORT: string = "8080";
+
+// port is from environment
+const PORT: string = process.env.PORT || "8080"; 
 
 app.use(cors());
 app.use(bodyParser.json());

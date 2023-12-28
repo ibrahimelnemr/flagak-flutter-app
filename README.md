@@ -1,12 +1,14 @@
-### API Endpoints
+# Overview
 
--
 
-**Registration**
+# API Endpoints
 
-POST /users/register
 
-Request
+## **Registration**
+
+### POST /users/register
+
+#### Request
 
 ```json
 {
