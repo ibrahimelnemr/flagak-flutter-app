@@ -16,6 +16,24 @@ Before running the application, ensure you have the following software installed
 - [Node.js](https://nodejs.org/)
 - [MongoDB](https://www.mongodb.com/try/download/community)
 
+# Flutter App Structure
+
+
+The Flutter app is organized into several main files and directories:
+
+- **lib/**
+  - **views/**: Dart files for different screens or views.
+    - `admin_view.dart`: Implements the Admin view for managing products.
+    - `create_product_view.dart`: Allows admins to create new products.
+    - `edit_product_view.dart`: Allows admins to edit existing products.
+    - `login_view.dart`: Handles user login.
+    - `main_view.dart`: Displays the main screen with a list of products.
+    - `register_view.dart`: Handles user registration.
+    - `view_product_view.dart`: Displays information about a product.
+    - `welcome_view.dart`: The welcome screen with registration and login options.
+  - **services/**: Dart files for services.
+    - `api_service.dart`: Implements communication with the backend API.
+  - `main.dart`: The main entry point for the app.
 
 # Backend Setup
 
