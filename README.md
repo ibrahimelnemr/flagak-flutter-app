@@ -77,7 +77,7 @@ The Flutter app is organized into several main files and directories:
   "name": "Test User",
   "email": "testuser@example.com",
   "password": "testpassword",
-  "is_admin": 0
+  "is_admin": true
 }
 ```
 
@@ -85,13 +85,12 @@ The Flutter app is organized into several main files and directories:
 
 ```json
 {
-  "message": "User registered successfully with email: testuser@example.com",
-  "user": {
-    "id": 3,
-    "name": "Test User",
-    "email": "testuser@example.com",
-    "is_admin": 0
-  }
+    "message": "User registered successfully with email: testuser@example.com.",
+    "user": {
+        "id": "658d97664c8643eaaebb37d4",
+        "name": "Test User",
+        "email": "testuser@example.com"
+    }
 }
 ```
 
@@ -112,29 +111,15 @@ The Flutter app is organized into several main files and directories:
 
 ```json
 {
-  "message": "Logged In Successfully",
-  "token": "ACCESS_TOKEN"
-}
-```
-
-## **Logout**
-
-### POST /users/logout
-Authorization: Bearer ACCESS_TOKEN
-
-#### Request
-
-```json
-{
-  "token": "ACCESS_TOKEN"
-}
-```
-
-#### Response
-
-```json
-{
-  "message": "Logged Out Successfully."
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OGQ5NzY2NGM4NjQzZWFhZWJiMzdkNCIsIm5hbWUiOiJUZXN0IFVzZXIiLCJlbWFpbCI6InRlc3R1c2VyQGV4YW1wbGUuY29tIiwicGFzc3dvcmRfaGFzaCI6IiQyYSQxMCR1ekVXMWM5WHN1MEJwdWU2amw4amR1UnFvaHd1SURuWEpkeFZyZTIxLnRsWUFYUjB1YmExUyIsImlzX2FkbWluIjp0cnVlLCJfX3YiOjB9LCJpYXQiOjE3MDM3NzgxOTR9.CVxRS6QKmfbgKKNIPVy9gE8Xpzu5JXB1ERo4W8Hb45I",
+    "user": {
+        "_id": "658d97664c8643eaaebb37d4",
+        "name": "Test User",
+        "email": "testuser@example.com",
+        "password_hash": "$2a$10$uzEW1c9Xsu0Bpue6jl8jduRqohwuIDnXJdxVre21.tlYAXR0uba1S",
+        "is_admin": true,
+        "__v": 0
+    }
 }
 ```
 
@@ -142,58 +127,77 @@ Authorization: Bearer ACCESS_TOKEN
 
 ### GET /products
 
+Authorization: Bearer ACCESS_TOKEN
+
 #### Response
 
 ```json
 [
-  {
-    "name": "Test Product",
-    "price": 9.99
-  },
-  {
-    "name": "Test Product 2",
-    "price": 13.99
-  },
-  {
-    "name": "Test Product 3",
-    "price": 19.99
-  }
+    {
+        "_id": "658b63ece0995c4d4fdda146",
+        "name": "test",
+        "description": "test",
+        "price": 9,
+        "user_id": "658b5f71c2105587a8c7fdd0",
+        "__v": 0
+    },
+    {
+        "_id": "658c5ac6b1c78dbe306d6e33",
+        "name": "testproduct2EDITED",
+        "description": "testproduct2",
+        "price": 9,
+        "user_id": "658b0d0f7ad01c2cb8eb8593",
+        "__v": 0
+    },
+    {
+        "_id": "658c5f7eb1c78dbe306d6e40",
+        "name": "test2",
+        "description": "test2",
+        "price": 9,
+        "user_id": "658b0d0f7ad01c2cb8eb8593",
+        "__v": 0
+    },
+    {
+        "_id": "658c60eab1c78dbe306d6e46",
+        "name": "test3",
+        "description": "test3",
+        "price": 10,
+        "user_id": "658b0d0f7ad01c2cb8eb8593",
+        "__v": 0
+    },
+    {
+        "_id": "658c6223b1c78dbe306d6e4d",
+        "name": "test4",
+        "description": "test4",
+        "price": 9,
+        "user_id": "658b0d0f7ad01c2cb8eb8593",
+        "__v": 0
+    },
+    {
+        "_id": "658c6308b1c78dbe306d6e5e",
+        "name": "test5",
+        "description": "test5",
+        "price": 10,
+        "user_id": "658b0d0f7ad01c2cb8eb8593",
+        "__v": 0
+    }
 ]
-```
-
-## **View One Product**
-
-### GET /products/{id}
-Authorization: Bearer ACCESS_TOKEN
-
-#### Request
-
-```json
-{
-  "id": 1
-}
-```
-
-#### Response
-
-```json
-{
-  "id": 1,
-  "name": "Test Product",
-  "price": 9.99
-}
 ```
 
 ## **Create Product**
 
 ### POST /products/create
 
+Authorization: Bearer ACCESS_TOKEN
+
 #### Request
 
 ```json
 {
-  "name": "Test Product",
-  "price": 9.99
+    "name": "Test Product",
+    "description": "A test product",
+    "price": 9.99,
+    "user_id": "658d97664c8643eaaebb37d4"
 }
 ```
 
@@ -201,9 +205,15 @@ Authorization: Bearer ACCESS_TOKEN
 
 ```json
 {
-  "id": 1,
-  "name": "Test Product",
-  "price": 9.99
+    "message": "Product created successfully with name: Test Product, description: A test product and price: 9.99.",
+    "product": {
+        "name": "Test Product",
+        "description": "A test product",
+        "price": 9.99,
+        "user_id": "658d97664c8643eaaebb37d4",
+        "_id": "658d9abf4c8643eaaebb37da",
+        "__v": 0
+    }
 }
 ```
 
@@ -214,10 +224,11 @@ Authorization: Bearer ACCESS_TOKEN
 
 ```json
 {
-  "id": "test_id",
-  "name": "Test Product",
-  "price": 15.99,
-  "description": "Test description"
+    "_id": "65872ea3cd6f18943c843412",
+    "name": "Test Product Edited",
+    "description": "A test product",
+    "price": 9.99,
+    "__v": 0
 }
 ```
 
@@ -225,10 +236,7 @@ Authorization: Bearer ACCESS_TOKEN
 
 ```json
 {
-  "id": "test_id",
-  "name": "Test Product",
-  "price": 15.99,
-  "description": "Test description"
+    "message": "Product edited successfully with name: Test Product Edited, description: A test product and price: 9.99."
 }
 ```
 
