@@ -62,12 +62,7 @@ class _AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Admin View',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
+      
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
         builder: (context, snapshot) {

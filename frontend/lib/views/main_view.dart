@@ -94,7 +94,7 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
         //     color: Colors.white
         //   ),
         // ),
-        backgroundColor: Colors.grey[100],
+        backgroundColor: Colors.white,
         actions: [
           Row(
             children: [
@@ -134,13 +134,21 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                  title: Text(products[index].name),
+                  title: Text(
+                    products[index].name,
+                    style: TextStyle(
+                      
+                    ),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         '\$${products[index].price.toStringAsFixed(2)}',
-                        style: TextStyle(color: Colors.green),
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                       Text(products[index].description),
                     ],
@@ -154,7 +162,7 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
                         return IconButton(
                           icon: Icon(
                             Icons.remove_red_eye,
-                            color: Colors.blue,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             _viewProduct(products[index]);
