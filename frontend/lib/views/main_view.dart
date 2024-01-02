@@ -87,7 +87,14 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        // title: Text(
+        //   'Main',
+        //   style: TextStyle(
+        //     fontWeight: FontWeight.bold,
+        //     color: Colors.white
+        //   ),
+        // ),
+        backgroundColor: Colors.grey[100],
         actions: [
           Row(
             children: [
