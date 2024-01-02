@@ -59,7 +59,9 @@ class _CreateProductViewState extends State<CreateProductView> {
         title: Text(
           'Create Product',
           style: TextStyle(fontWeight: FontWeight.bold),
+          
         ),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

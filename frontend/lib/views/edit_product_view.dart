@@ -85,6 +85,11 @@ class _EditProductViewState extends State<EditProductView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+              padding: EdgeInsets.all(50),
+              child: Image(
+                  image: AssetImage('assets/1.png'),
+                )),
             TextField(
               controller: nameController,
               decoration: InputDecoration(

@@ -10,7 +10,7 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   late Future<List<Product>> futureProducts;
-final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
+  final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
   late Future<bool> isAdminFuture;
 
   @override
@@ -22,7 +22,6 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
     ApiService.onProductUpdate = () {
       _refreshProducts();
     };
-
   }
 
   void refreshProducts() {
@@ -30,9 +29,11 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
   }
 
   void _refreshProducts() {
-    setState(() {
-      futureProducts = ApiService.getAllProducts(isAdmin: true);
-    });
+    setState(
+      () {
+        futureProducts = ApiService.getAllProducts(isAdmin: true);
+      },
+    );
   }
 
   void _navigateToAdminView() {
@@ -40,7 +41,6 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
     _refreshProducts();
 
     (_mainViewKey.currentState as _MainViewState).refreshProducts();
-
   }
 
   Future<void> _viewProduct(Product product) async {
@@ -72,73 +72,74 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                  minVerticalPadding: 20,
-                  hoverColor: Colors.white,
-                  titleAlignment: ListTileTitleAlignment.center,
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                    products[index].name,
-                    style: TextStyle(
-                      fontSize: 24
+                    minVerticalPadding: 20,
+                    hoverColor: Colors.white,
+                    titleAlignment: ListTileTitleAlignment.center,
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          products[index].name,
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ],
                     ),
-                  ),
-                    ],
-                  ),
-                  
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('assets/1.png'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.zero,
+                          child: Image(
+                            image: AssetImage('assets/1.png'),
+                          ),
                         ),
                         SizedBox(height: 10),
-                      Text(
-                        '\$${products[index].price.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20
+                        Text(
+                          '\$${products[index].price.toStringAsFixed(2)}',
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(products[index].description,
-                      style: TextStyle(fontSize: 16)
-                      ),
-                    ],
-                  ),
-                  trailing: FutureBuilder<bool>(
-                    future: isAdminFuture,
-                    builder: (context, isAdminSnapshot) {
-                      if (isAdminSnapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      } else if (isAdminSnapshot.hasData && isAdminSnapshot.data!) {
-                        return IconButton(
-                          icon: Icon(
-                            Icons.remove_red_eye,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            _viewProduct(products[index]);
-                          },
-                        );
-                      } else {
-                        return SizedBox.shrink();
-                      }
+                        SizedBox(height: 10),
+                        Text(products[index].description,
+                            style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                    trailing: FutureBuilder<bool>(
+                      future: isAdminFuture,
+                      builder: (context, isAdminSnapshot) {
+                        if (isAdminSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (isAdminSnapshot.hasData &&
+                            isAdminSnapshot.data!) {
+                          return IconButton(
+                            icon: Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              _viewProduct(products[index]);
+                            },
+                          );
+                        } else {
+                          return SizedBox.shrink();
+                        }
+                      },
+                    ),
+                    onTap: () {
+                      // Handle product tap
                     },
                   ),
-                  onTap: () {
-                    // Handle product tap
-                  },
-                ),
                 );
               },
             );
           } else if (snapshot.hasError) {
             print("Error displaying products in main view: ${snapshot.error}");
             return Center(
-              child: Text('Error displaying products in main view: ${snapshot.error}'),
+              child: Text(
+                  'Error displaying products in main view: ${snapshot.error}'),
             );
           }
 
