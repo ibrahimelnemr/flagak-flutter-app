@@ -87,21 +87,18 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Main',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        backgroundColor: Colors.white,
         actions: [
           Row(
             children: [
               IconButton(
                 icon: Icon(Icons.exit_to_app),
                 onPressed: _logout,
-                color: Colors.blue,
+                color: Colors.black,
               ),
               Text(
                 'Logout',
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: Colors.black),
               ),
             ],
           ),
@@ -110,11 +107,11 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
               IconButton(
                 icon: Icon(Icons.refresh),
                 onPressed: _refreshProducts,
-                color: Colors.blue,
+                color: Colors.black,
               ),
               Text(
                 'Refresh',
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: Colors.black),
               ),
             ],
           ),

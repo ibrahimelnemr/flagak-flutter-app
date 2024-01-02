@@ -118,10 +118,10 @@ class _AppScaffoldState extends State<AppScaffold> {
             label: 'Main',
           ),
         ],
-backgroundColor: Colors.grey[200],
-        selectedItemColor: Colors.black, 
-        unselectedItemColor: Colors.black, 
-        // selectedIconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.grey[200],
+        // selectedItemColor: Colors.black, 
+        // unselectedItemColor: Colors.black, 
+        // // selectedIconTheme: IconThemeData(color: Colors.white),
         // selectedLabelStyle: TextStyle(color: Colors.black),
         // unselectedLabelStyle: TextStyle(color: Colors.black)
 

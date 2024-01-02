@@ -7,20 +7,14 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-TextEditingController fullNameController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-bool isAdmin = false;
+  bool isAdmin = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Register',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -30,10 +24,10 @@ bool isAdmin = false;
               controller: fullNameController,
               decoration: InputDecoration(
                 labelText: 'Full Name',
-                  focusedBorder: OutlineInputBorder(
+                focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.blue),
                 ),
-                ),
+              ),
             ),
             SizedBox(height: 16),
             TextField(
@@ -57,7 +51,7 @@ bool isAdmin = false;
               ),
               obscureText: true,
             ),
-SizedBox(height: 16),
+            SizedBox(height: 16),
             Row(
               children: [
                 Text('Account Type:'),
@@ -97,12 +91,12 @@ SizedBox(height: 16),
               onPressed: () async {
                 try {
                   final response = await ApiService.registerUser(
-name: fullNameController.text,
+                    name: fullNameController.text,
                     email: emailController.text,
                     password: passwordController.text,
-isAdmin: isAdmin,
+                    isAdmin: isAdmin,
                   );
-print("Registration successful: $response");
+                  print("Registration successful: $response");
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -113,8 +107,7 @@ print("Registration successful: $response");
                       duration: Duration(seconds: 2),
                     ),
                   );
-}
-                catch (error) {
+                } catch (error) {
                   print("Error registering user: $error");
 // error message
                   ScaffoldMessenger.of(context).showSnackBar(
