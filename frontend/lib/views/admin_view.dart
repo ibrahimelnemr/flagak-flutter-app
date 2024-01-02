@@ -57,7 +57,6 @@ class _AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
         builder: (context, snapshot) {
@@ -68,44 +67,46 @@ class _AdminViewState extends State<AdminView> {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                  title: Text(products[index].name),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '\$${products[index].price.toStringAsFixed(2)}',
-                        style: TextStyle(color: Colors.green),
-                      ),
-                      Text(products[index].description),
-                    ],
-                  ),
-
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.orange,
+                    minVerticalPadding: 20,
+                    hoverColor: Colors.white,
+                    titleAlignment: ListTileTitleAlignment.center,
+                    title: Text(products[index].name),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '\$${products[index].price.toStringAsFixed(2)}',
+                          style: TextStyle(color: Colors.green),
                         ),
-                        onPressed: () {
-                          _editProduct(products[index]);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.blue,
+                        Text(products[index].description),
+                      ],
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.orange,
+                          ),
+                          onPressed: () {
+                            _editProduct(products[index]);
+                          },
                         ),
-                        onPressed: () {
-                          _viewProduct(products[index]);
-                        },
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    _editProduct(products[index]);
-                  },
+                        IconButton(
+                          icon: Icon(
+                            Icons.remove_red_eye,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            _viewProduct(products[index]);
+                          },
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      _editProduct(products[index]);
+                    },
                   ),
                 );
               },

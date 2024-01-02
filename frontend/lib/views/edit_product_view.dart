@@ -78,6 +78,7 @@ class _EditProductViewState extends State<EditProductView> {
           'Edit Product',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -107,6 +107,7 @@ class _RegisterViewState extends State<RegisterView> {
                       duration: Duration(seconds: 2),
                     ),
                   );
+                  Navigator.pushNamed(context, '/login');
                 } catch (error) {
                   print("Error registering user: $error");
 // error message

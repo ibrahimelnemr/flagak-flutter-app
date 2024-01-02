@@ -280,6 +280,18 @@ class ApiService {
     return '$userId';
   }
 
+  static Future<String> getUserName() async {
+    final String? userName = await _secureStorage.read(key: 'user_name');
+    print("User Name found: $userName");
+    return '$userName';
+  }
+
+  static Future<String> getUserEmail() async {
+    final String? userEmail = await _secureStorage.read(key: 'user_email');
+    print("User Email found: $userEmail");
+    return '$userEmail';
+  }
+
   // get authorization headers with stored token
   static Future<Map<String, String>> getAuthHeaders() async {
     final String? authToken = await _secureStorage.read(key: 'auth_token');
