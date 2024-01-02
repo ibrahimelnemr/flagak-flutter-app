@@ -67,16 +67,6 @@ class _AppScaffoldState extends State<AppScaffold> {
     isAdminFuture = ApiService.isAdmin();
   }
 
-  static List<Widget> _widgetOptions = <Widget>[
-    WelcomeView(),
-    RegisterView(),
-    LoginView(),
-    MainView(),
-    AdminView(),
-    AccountView(),
-  ];
-
-
   void _logout() async {
     try {
       await ApiService.logoutUser();
@@ -107,11 +97,10 @@ class _AppScaffoldState extends State<AppScaffold> {
   }
 
 
-  void _onItemTapped(int index) {
+  void setIndex(int index) {
     setState(() {
       _currentIndex = index;
     });
-
   }
 
   @override
@@ -121,42 +110,41 @@ class _AppScaffoldState extends State<AppScaffold> {
         title: Text('MyApp'),
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: Center(child: _widgetOptions[_currentIndex]),
+      // body: Center(child: _widgetOptions[_currentIndex]),
+      body: widget.child,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             ListTile(
               title: const Text('Account'),
-              selected: _currentIndex == 0,
               onTap: () {
-                _onItemTapped(0);
+                // _onItemTapped(0);
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/account');
               },
             ),
             ListTile(
               title: const Text('Browse Products'),
-              selected: _currentIndex == 1,
               onTap: () {
-                _onItemTapped(1);
+                // _onItemTapped(1);
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/main');
               },
             ),
             ListTile(
               title: const Text('Manage Your Store (Admin)'),
-              selected: _currentIndex == 2,
               onTap: () {
-                _onItemTapped(2);
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/admin');
               },
             ),
             ListTile(
               title: const Text('Logout'),
-              selected: _currentIndex == 3,
               onTap: () {
-                _onItemTapped(3);
-                _logout();
                 Navigator.pop(context);
+                _logout();
+                Navigator.pushNamed(context, '/login');
               },
             ),
           ]
