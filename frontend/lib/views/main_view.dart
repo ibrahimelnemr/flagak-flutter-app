@@ -35,35 +35,6 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
     });
   }
 
-  void _logout() async {
-    try {
-      await ApiService.logoutUser();
-// Navigate to login screen after successful logout
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Logout successful!',
-            style: TextStyle(color: Colors.green),
-          ),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      ApiService.onProductUpdate = null;
-      Navigator.pushReplacementNamed(context, '/login');
-    } catch (error) {
-      print("Error logging out: $error");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Error logging out: $error',
-            style: TextStyle(color: Colors.red),
-          ),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
   void _navigateToAdminView() {
     Navigator.pushNamed(context, '/admin');
     _refreshProducts();
@@ -87,42 +58,7 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text(
-        //   'Main',
-        //   style: TextStyle(
-        //     fontWeight: FontWeight.bold,
-        //     color: Colors.white
-        //   ),
-        // ),
         backgroundColor: Colors.white,
-        actions: [
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.exit_to_app),
-                onPressed: _logout,
-                color: Colors.black,
-              ),
-              Text(
-                'Logout',
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: _refreshProducts,
-                color: Colors.black,
-              ),
-              Text(
-                'Refresh',
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-        ],
       ),
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
@@ -137,7 +73,6 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
                   title: Text(
                     products[index].name,
                     style: TextStyle(
-                      
                     ),
                   ),
                   subtitle: Column(
@@ -191,11 +126,6 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
             child: CircularProgressIndicator(),
           );
         },
-      ),
-floatingActionButton: FloatingActionButton.extended(
-        onPressed: _navigateToAdminView,
-        label: Text('Admin Page'),
-        icon: Icon(Icons.admin_panel_settings),
       ),
     );
   }
