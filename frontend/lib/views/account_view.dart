@@ -13,7 +13,9 @@ class _AccountViewState extends State<AccountView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: (Text("Account view"))
+    );
   }
 
 }

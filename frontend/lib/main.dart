@@ -39,14 +39,9 @@ class StartApp extends StatelessWidget {
             fontSize: 20,
           ), 
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Colors.white, 
-          selectedItemColor: Colors.black, 
-          unselectedItemColor: Colors.black, 
-        ),
         buttonTheme: ButtonThemeData(
           buttonColor: Colors.black, 
-          textTheme: ButtonTextTheme.primary,
+          textTheme: ButtonTextTheme.normal,
         ),
       ),
     );
@@ -73,10 +68,12 @@ class _AppScaffoldState extends State<AppScaffold> {
   }
 
   static List<Widget> _widgetOptions = <Widget>[
-    AppScaffold(child: RegisterView()),
-    AppScaffold(child: RegisterView()),
-    AppScaffold(child: RegisterView()),
-    AppScaffold(child: RegisterView()),
+    WelcomeView(),
+    RegisterView(),
+    LoginView(),
+    MainView(),
+    AdminView(),
+    AccountView(),
   ];
 
 
@@ -114,21 +111,7 @@ class _AppScaffoldState extends State<AppScaffold> {
     setState(() {
       _currentIndex = index;
     });
-    //Widget targetWidget = MainView();
-    // switch (index) {
-    //   case 0:
-    //   Navigator.pushReplacementNamed(context, '/account');
-    //   break;
-    //   case 1: 
-    //   Navigator.pushReplacementNamed(context, '/main');
-    //   break;
-    //   case 2: 
-    //   Navigator.pushReplacementNamed(context, '/admin');
-    //   break;
-    //   case 3: 
-    //   _logout();
-    //   break;
-    // }
+
   }
 
   @override
@@ -172,63 +155,13 @@ class _AppScaffoldState extends State<AppScaffold> {
               selected: _currentIndex == 3,
               onTap: () {
                 _onItemTapped(3);
+                _logout();
                 Navigator.pop(context);
               },
             ),
           ]
         )
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-
-          // navigate
-          switch (index) {
-            case 0:
-              Navigator.pushReplacementNamed(context, '/welcome');
-              break;
-            case 1:
-              Navigator.pushReplacementNamed(context, '/register');
-              break;
-            case 2:
-              Navigator.pushReplacementNamed(context, '/login');
-              break;
-            case 3:
-              Navigator.pushReplacementNamed(context, '/main');
-              break;
-            default:
-              break;
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Welcome',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_add),
-            label: 'Register',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.login),
-            label: 'Login',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Main',
-          ),
-        ],
-        backgroundColor: Colors.white,
-        // selectedItemColor: Colors.black, 
-        // unselectedItemColor: Colors.black, 
-        // // selectedIconTheme: IconThemeData(color: Colors.white),
-        // selectedLabelStyle: TextStyle(color: Colors.black),
-        // unselectedLabelStyle: TextStyle(color: Colors.black)
-
-      ),
-    );
+          );
   }
 }
