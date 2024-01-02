@@ -51,12 +51,7 @@ class _AdminViewState extends State<AdminView> {
 
   void _createProduct() {
 // Navigate to CreateProductView
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CreateProductView(),
-      ),
-    );
+    Navigator.pushNamed(context, '/createproduct');
   }
 
   @override

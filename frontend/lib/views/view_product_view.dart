@@ -17,8 +17,10 @@ class ViewProductView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Align(
+          alignment: Alignment.center,
+          child:  Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               product.name,
@@ -40,8 +42,21 @@ class ViewProductView extends StatelessWidget {
               product.description,
               style: TextStyle(fontSize: 16),
             ),
+            SizedBox(height: 16),
+            SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Back to Admin Page',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
           ],
         ),
+        )
+       
       ),
     );
   }

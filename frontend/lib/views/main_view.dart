@@ -59,6 +59,7 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
@@ -66,26 +67,45 @@ final GlobalKey<_MainViewState> _mainViewKey = GlobalKey<_MainViewState>();
           if (snapshot.hasData) {
             List<Product> products = snapshot.data!;
             return ListView.builder(
+              padding: EdgeInsets.all(32),
               itemCount: products.length,
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                  title: Text(
+                  minVerticalPadding: 20,
+                  hoverColor: Colors.white,
+                  titleAlignment: ListTileTitleAlignment.center,
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
                     products[index].name,
                     style: TextStyle(
+                      fontSize: 24
                     ),
                   ),
+                    ],
+                  ),
+                  
                   subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Image(
+                        image: AssetImage('assets/1.png'),
+                        ),
+                        SizedBox(height: 10),
                       Text(
                         '\$${products[index].price.toStringAsFixed(2)}',
                         style: TextStyle(
                           color: Colors.green,
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
                         ),
                       ),
-                      Text(products[index].description),
+                      SizedBox(height: 10),
+                      Text(products[index].description,
+                      style: TextStyle(fontSize: 16)
+                      ),
                     ],
                   ),
                   trailing: FutureBuilder<bool>(

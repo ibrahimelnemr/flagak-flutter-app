@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
+import 'package:frontend/services/product.dart';
 import 'package:frontend/views/admin_view.dart';
+import 'package:frontend/views/create_product_view.dart';
+import 'package:frontend/views/edit_product_view.dart';
+import 'package:frontend/views/view_product_view.dart';
 import 'views/register_view.dart';
 import 'views/login_view.dart';
 import 'views/main_view.dart';
@@ -15,6 +19,8 @@ void main() async {
 }
 
 class StartApp extends StatelessWidget {
+  var product;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,8 +32,12 @@ class StartApp extends StatelessWidget {
         '/main': (context) => AppScaffold(child: MainView()),
         '/admin': (context) => AppScaffold(child: AdminView()),
         '/account': (context) => AppScaffold(child: AccountView()),
+        '/createproduct': (context) => AppScaffold(child: CreateProductView()),
+        //'/viewproduct': (context) => AppScaffold(child: EditProductView(product: product),),
+        //'/editproduct': (context) => AppScaffold(child: ViewProductView(product: product),)
       },
       theme: ThemeData(
+        iconTheme: IconThemeData(color: Colors.black),
         primaryColor: Colors.black, 
         fontFamily: 'Sans-serif',
         scaffoldBackgroundColor: Colors.white, 
@@ -58,13 +68,15 @@ class AppScaffold extends StatefulWidget {
 }
 
 class _AppScaffoldState extends State<AppScaffold> {
-  int _currentIndex = 0;
   late Future<bool> isAdminFuture;
+  late Future<bool> isLoggedInFuture;
 
   @override
   void initState() {
     super.initState();
     isAdminFuture = ApiService.isAdmin();
+
+    isLoggedInFuture = ApiService.isLoggedIn();
   }
 
   void _logout() async {
@@ -96,13 +108,6 @@ class _AppScaffoldState extends State<AppScaffold> {
     }
   }
 
-
-  void setIndex(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +124,6 @@ class _AppScaffoldState extends State<AppScaffold> {
             ListTile(
               title: const Text('Account'),
               onTap: () {
-                // _onItemTapped(0);
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/account');
               },
@@ -127,20 +131,24 @@ class _AppScaffoldState extends State<AppScaffold> {
             ListTile(
               title: const Text('Browse Products'),
               onTap: () {
-                // _onItemTapped(1);
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/main');
               },
             ),
             ListTile(
-              title: const Text('Manage Your Store (Admin)'),
+              title: const Text('Admin Interface'),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/admin');
               },
             ),
+
+            SizedBox(height: 16),
             ListTile(
-              title: const Text('Logout'),
+              title: const Text('Logout',
+              style: TextStyle(
+                color: Colors.red,
+                )),
               onTap: () {
                 Navigator.pop(context);
                 _logout();

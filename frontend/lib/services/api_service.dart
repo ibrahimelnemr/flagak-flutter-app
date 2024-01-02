@@ -26,6 +26,17 @@ class ApiService {
     return isAdmin == 'true';
   }
 
+  static Future<bool> isLoggedIn() async {
+
+    String? isLoggedIn = await _secureStorage.read(key: 'user_id');
+    if (isLoggedIn != null) {
+      print("User is logged in. User ID: $isLoggedIn");
+      return true;
+    }
+    print("User is not logged in. User ID: $isLoggedIn");
+    return false;
+  }
+
   static Future<Map<String, dynamic>> registerUser(
       {required String name,
       required String email,

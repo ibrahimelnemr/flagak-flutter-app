@@ -6,7 +6,7 @@ class CreateProductView extends StatefulWidget {
   
   //final Product product;
 
-  CreateProductView(/*{required this.product}*/);
+  CreateProductView();
 
   @override
   _CreateProductViewState createState() => _CreateProductViewState();
