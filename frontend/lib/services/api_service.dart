@@ -128,6 +128,36 @@ class ApiService {
   static Future<void> logoutUser() async {
     // Clear the token from secure storage
     await _secureStorage.delete(key: 'auth_token');
+    await _secureStorage.delete(key: 'user_is_admin');
+    await _secureStorage.delete(key: 'user_id');
+    await _secureStorage.delete(key: 'user_name');
+    await _secureStorage.delete(key: 'user_email');
+
+    await _secureStorage.write(
+    key: 'auth_token', value: null);
+
+      await _secureStorage.write(
+        key: 'user_id',
+        value: null,
+      );
+
+      await _secureStorage.write(
+        key: 'user_name',
+        value: null,
+      );
+
+      await _secureStorage.write(
+        key: 'user_email',
+        value: null,
+      );
+
+
+      // store is_admin as string "true" or "false"
+      await _secureStorage.write(
+        key: 'user_is_admin',
+        value: null,
+      );
+
     print('User logged out');
   }
 

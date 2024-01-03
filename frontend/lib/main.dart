@@ -135,51 +135,116 @@ class _AppScaffoldState extends State<AppScaffold> {
       // body: Center(child: _widgetOptions[_currentIndex]),
       body: widget.child,
       drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-        ListTile(
-          title: const Text('Account'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, '/account');
-          },
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            // Account Navigator - show if logged in
+            FutureBuilder<bool>(
+              future: isLoggedInFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox.shrink();
+                } else if (snapshot.hasError || snapshot.data == false) {
+                  return SizedBox.shrink();
+                } else
+                  return ListTile(
+                    title: const Text('Account'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/account');
+                    },
+                  );
+              },
+            ),
+            // Browse products Navigator - show if logged in
+            FutureBuilder<bool>(
+              future: isLoggedInFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox.shrink();
+                } else if (snapshot.hasError || snapshot.data == false) {
+                  return SizedBox.shrink();
+                } else
+                  return ListTile(
+                    title: const Text('Browse Products'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/main');
+                    },
+                  );
+              },
+            ),
+            // Admin interface Navigator - show if admin
+            FutureBuilder<bool>(
+              future: isAdminFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox.shrink();
+                } else if (snapshot.hasError || snapshot.data == false) {
+                  return SizedBox.shrink();
+                } else
+                  return ListTile(
+                    title: const Text('Admin Interface'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/admin');
+                    },
+                  );
+              },
+            ),
+            SizedBox(height: 16),
+            // logout navigator - show if logged in
+            FutureBuilder<bool>(
+              future: isLoggedInFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox.shrink();
+                } else if (snapshot.hasError || snapshot.data == false) {
+                  return SizedBox.shrink();
+                } else
+                  return ListTile(
+                    title: const Text(
+                      'Logout',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _logout();
+                      Navigator.pushNamed(context, '/login');
+                    },
+                  );
+              },
+            ),
+            // login navigator - show if logged out
+            FutureBuilder<bool>(
+              future: isLoggedInFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox.shrink();
+                } else if (snapshot.hasError) {
+                  return SizedBox.shrink();
+                } else if (snapshot.data == true) {
+                  return SizedBox.shrink();
+                } else
+                  return ListTile(
+                    title: const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/login');
+                    },
+                  );
+              },
+            ),
+          ],
         ),
-        ListTile(
-          title: const Text('Browse Products'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, '/main');
-          },
-        ),
-        FutureBuilder<bool>(
-          future: isLoggedInFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return SizedBox.shrink();
-            } else if (snapshot.hasError || snapshot.data == false) {
-              return SizedBox.shrink();
-            } else
-              return ListTile(
-                title: const Text('Admin Interface'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, '/admin');
-                },
-              );
-          },
-        ),
-        SizedBox(height: 16),
-        ListTile(
-          title: const Text('Logout',
-              style: TextStyle(
-                color: Colors.red,
-              )),
-          onTap: () {
-            Navigator.pop(context);
-            _logout();
-            Navigator.pushNamed(context, '/login');
-          },
-        ),
-      ])),
+      ),
     );
   }
 }

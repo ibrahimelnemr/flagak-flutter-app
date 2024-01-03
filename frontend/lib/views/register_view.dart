@@ -16,7 +16,22 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Title(color: Colors.black, child: Text("Register")),
+        title: Title(
+          color: Colors.black,
+          child: Column(
+            children: [
+              SizedBox(height: 10,),
+              Text(
+                "Register",
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 30,
+                  
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

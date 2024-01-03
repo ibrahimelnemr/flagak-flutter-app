@@ -26,6 +26,8 @@ class ViewProductView extends StatelessWidget {
                 Image(
                   image: AssetImage('assets/1.png'),
                 ),
+                SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   product.name,
                   style: TextStyle(
@@ -39,6 +41,7 @@ class ViewProductView extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.green,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
                 SizedBox(height: 8),
