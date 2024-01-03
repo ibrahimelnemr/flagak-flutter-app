@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/helpers/not_logged_in_view.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
 import 'package:frontend/views/admin_view.dart';
@@ -33,24 +34,25 @@ class StartApp extends StatelessWidget {
         '/admin': (context) => AppScaffold(child: AdminView()),
         '/account': (context) => AppScaffold(child: AccountView()),
         '/createproduct': (context) => AppScaffold(child: CreateProductView()),
+        '/notloggedin': (context) => AppScaffold(child: NotLoggedInView()),
         //'/viewproduct': (context) => AppScaffold(child: EditProductView(product: product),),
         //'/editproduct': (context) => AppScaffold(child: ViewProductView(product: product),)
       },
       theme: ThemeData(
         iconTheme: IconThemeData(color: Colors.black),
-        primaryColor: Colors.black, 
+        primaryColor: Colors.black,
         fontFamily: 'Sans-serif',
-        scaffoldBackgroundColor: Colors.white, 
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
           color: Colors.white,
-          elevation: 0, 
+          elevation: 0,
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-          ), 
+          ),
         ),
         buttonTheme: ButtonThemeData(
-          buttonColor: Colors.black, 
+          buttonColor: Colors.black,
           textTheme: ButtonTextTheme.normal,
         ),
       ),
@@ -75,7 +77,6 @@ class _AppScaffoldState extends State<AppScaffold> {
   void initState() {
     super.initState();
     isAdminFuture = ApiService.isAdmin();
-
     isLoggedInFuture = ApiService.isLoggedIn();
   }
 
@@ -112,52 +113,73 @@ class _AppScaffoldState extends State<AppScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MyApp'),
+        title: Container(
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Trendify',
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 20,
+                ),
+              ),
+              Icon(Icons.rocket_launch_outlined),
+              SizedBox(width: 50)
+            ],
+          ),
+        ),
         iconTheme: IconThemeData(color: Colors.black),
       ),
       // body: Center(child: _widgetOptions[_currentIndex]),
       body: widget.child,
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            ListTile(
-              title: const Text('Account'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/account');
-              },
-            ),
-            ListTile(
-              title: const Text('Browse Products'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/main');
-              },
-            ),
-            ListTile(
-              title: const Text('Admin Interface'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/admin');
-              },
-            ),
-
-            SizedBox(height: 16),
-            ListTile(
-              title: const Text('Logout',
+          child: ListView(padding: EdgeInsets.zero, children: [
+        ListTile(
+          title: const Text('Account'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, '/account');
+          },
+        ),
+        ListTile(
+          title: const Text('Browse Products'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, '/main');
+          },
+        ),
+        FutureBuilder<bool>(
+          future: isLoggedInFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SizedBox.shrink();
+            } else if (snapshot.hasError || snapshot.data == false) {
+              return SizedBox.shrink();
+            } else
+              return ListTile(
+                title: const Text('Admin Interface'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/admin');
+                },
+              );
+          },
+        ),
+        SizedBox(height: 16),
+        ListTile(
+          title: const Text('Logout',
               style: TextStyle(
                 color: Colors.red,
-                )),
-              onTap: () {
-                Navigator.pop(context);
-                _logout();
-                Navigator.pushNamed(context, '/login');
-              },
-            ),
-          ]
-        )
-      ),
-          );
+              )),
+          onTap: () {
+            Navigator.pop(context);
+            _logout();
+            Navigator.pushNamed(context, '/login');
+          },
+        ),
+      ])),
+    );
   }
 }
