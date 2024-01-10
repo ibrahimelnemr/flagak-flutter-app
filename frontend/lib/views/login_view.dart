@@ -24,16 +24,7 @@ class _LoginViewState extends State<LoginView> {
           children: [
             CustomTextField(controller: emailController, labelText: 'Email Address'),
             SizedBox(height: 16),
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
-              obscureText: true,
-            ),
+            CustomTextField(controller: passwordController, labelText: 'Password', obscureText: true),
             SizedBox(height: 16),
             CustomButton(buttonText: "Login", onPressed: () async {
                try {
