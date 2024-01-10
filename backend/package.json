@@ -2,10 +2,11 @@
     "name": "backend",
     "version": "0.1.0",
     "description": "",
-    "main": "dist/server.js",
+    "main": "src/server.ts",
     "scripts": {
         "build": "npx tsc",
         "start": "node dist/server.js",
+        "nodemon": "nodemon src/server.ts",
         "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
         "tsc": "tsc",
         "lint": "npx eslint --ext .js,.ts .",

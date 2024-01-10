@@ -30,6 +30,8 @@ export default class productController {
             const price = req.body.price;
             const user_id = req.body.user_id;
 
+          //  userid=req.userdata.userid;
+
             let errorMessage = "";
 
             if (typeof user_id !== "string") 

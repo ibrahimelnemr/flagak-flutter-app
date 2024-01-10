@@ -16,6 +16,13 @@ export default class utils {
             const token = (authorizationHeader as string).split(" ")[1];
     
             const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+
+
+            const decodedJSONString = JSON.stringify(decoded, null, 2);
+
+            const decodedJSON = JSON.parse(decodedJSONString);
+
+            //req.userdata=decodedJSON;
     
             console.log("Token verified successfully!");
             next();

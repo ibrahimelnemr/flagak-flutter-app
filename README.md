@@ -245,6 +245,30 @@ Authorization: Bearer ACCESS_TOKEN
 https://www.figma.com/file/Nje4m7yaF1D4q9yAmKaTGg/Flagak-App-Task
 
 
+
 # Elastic Beanstalk Deployment
 
 http://flagak-task-2-env.eba-v47pizxh.eu-north-1.elasticbeanstalk.com/
+
+*Note that this environment is not currently active.*
+
+# Set up Local Test Backend
+
+
+In order to use a local test backend, ensure you have MongoDB installed and start the MongoDB service
+
+For instance, using homebrew:
+
+`brew services start mongodb-community`
+
+After that navigate to the backend directory
+
+`cd backend`
+
+And start the server
+
+`npm run start`
+
+Ensure that the backend is configured to connect to the local test API (localhost) and not the remote API.
+
+If the connection is successful, you should see "Connected to MongoDB" printed to the console.

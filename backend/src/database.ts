@@ -12,19 +12,19 @@ const mongodb_local_test_connection_string = process.env.LOCAL_TEST_URL as strin
 
 let uri = "";
 
-if (env == 'TEST') {
+if (env === 'TEST') {
+    console.log("Connecting to local test database");
     uri = mongodb_local_test_connection_string;
     console.log(`Connection string: ${uri}`);
-    console.log("Connecting to local test database");
 }
-if (env == 'DEV') {
+else if (env === 'DEV') {
     uri = mongodb_connection_string;
     console.log("Connecting to development database");
     console.log(`Connection string: ${uri}`);
 }
-else {
-    console.log("Could not find environment variable for test or development database environment");
-    console.log("Defaulting to DEV database environment");
+else if (env === null) {
+    console.log("Environment variable for test or development database undefined. Defaulting to DEV database environment.");
+
     uri = mongodb_connection_string;
 }
 
