@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/helpers/not_logged_in_view.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
+import 'package:frontend/utils/styles.dart';
 import 'package:frontend/views/view_product_view.dart';
+import 'package:frontend/widgets/custom_button.dart';
 import 'create_product_view.dart';
 import 'edit_product_view.dart';
 
@@ -139,9 +141,9 @@ class _AdminViewState extends State<AdminView> {
             );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CustomButton(
+        buttonText: "Add New Product",
         onPressed: _createProduct,
-        child: Icon(Icons.add),
       ),
     );
   }

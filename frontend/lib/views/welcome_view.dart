@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/styles.dart';
 import 'package:frontend/views/main_view.dart';
+import 'package:frontend/widgets/custom_button.dart';
 
 class WelcomeView extends StatelessWidget {
   @override
@@ -11,22 +13,15 @@ class WelcomeView extends StatelessWidget {
           children: [
             Text(
               'Welcome',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppStyles.titleTextStyle,
             ),
             SizedBox(height: 16),
-            ElevatedButton(
+            CustomButton(
+              buttonText: 'Get Started',
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
-              child: Text('Get Started'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-              ),
             ),
-            
           ],
         ),
       ),

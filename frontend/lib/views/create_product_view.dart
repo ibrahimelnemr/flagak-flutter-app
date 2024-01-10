@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
+import 'package:frontend/utils/styles.dart';
 
 class CreateProductView extends StatefulWidget {
   
@@ -58,7 +59,7 @@ class _CreateProductViewState extends State<CreateProductView> {
       appBar: AppBar(
         title: Text(
           'Create Product',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: AppStyles.titleTextStyle,
           
         ),
         iconTheme: IconThemeData(color: Colors.black),

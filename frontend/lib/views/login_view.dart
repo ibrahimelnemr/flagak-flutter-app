@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
+import 'package:frontend/utils/styles.dart';
+import 'package:frontend/widgets/custom_button.dart';
+import 'package:frontend/widgets/custom_text_field.dart';
+
 
 class LoginView extends StatefulWidget {
   @override
@@ -18,16 +22,7 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email Address',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            CustomTextField(controller: emailController, labelText: 'Email Address'),
             SizedBox(height: 16),
             TextField(
               controller: passwordController,
@@ -40,9 +35,8 @@ class _LoginViewState extends State<LoginView> {
               obscureText: true,
             ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                try {
+            CustomButton(buttonText: "Login", onPressed: () async {
+               try {
                   final token = await ApiService.loginUser(
                     email: emailController.text,
                     password: passwordController.text,
@@ -71,12 +65,8 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   );
                 }
-              },
-              child: Text('Login'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-              ),
-            ),
+            }),
+
             SizedBox(height: 8),
             TextButton(
               onPressed: () {
@@ -84,6 +74,7 @@ class _LoginViewState extends State<LoginView> {
                 Navigator.pushReplacementNamed(context, '/register');
               },
               child: Text('Create Account'),
+              style: AppStyles.defaultTextButtonStyle,
             ),
           ],
         ),

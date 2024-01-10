@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:frontend/helpers/not_logged_in_view.dart";
 import "package:frontend/services/api_service.dart";
+import "package:frontend/utils/styles.dart";
 
 class AccountView extends StatefulWidget {
   @override
@@ -43,46 +44,19 @@ class _AccountViewState extends State<AccountView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 32),
-                      Text(
-                        "Account Details",
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
-                      ),
+                      Text("Account Details", style: AppStyles.titleTextStyle),
                       SizedBox(height: 24),
-                      Text(
-                        "User ID",
-                        style: TextStyle(),
-                      ),
-                      SizedBox(height: 10),
-                      FutureBuilder<String>(
-                        future: userIdFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            String userId = snapshot.data!;
-                            return Text(userId);
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text(
-                                'Error retrieving account details: ${snapshot.error}');
-                          }
-                          return Text("Error retrieving account details.");
-                        },
-                      ),
-                      SizedBox(height: 24),
-                      Text(
-                        "Name",
-                        style: TextStyle(),
-                      ),
+                      Text("Name", style: AppStyles.bodyTextStyle),
                       SizedBox(height: 10),
                       FutureBuilder<String>(
                         future: userNameFuture,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            String userId = snapshot.data!;
-                            return Text(userId);
+                            String userName = snapshot.data!;
+                            return Text(
+                              userName,
+                              style: AppStyles.bodyTextStyle,
+                            );
                           } else if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return CircularProgressIndicator();
@@ -96,7 +70,7 @@ class _AccountViewState extends State<AccountView> {
                       SizedBox(height: 24),
                       Text(
                         "Registered Email",
-                        style: TextStyle(),
+                        style: AppStyles.bodyTextStyle,
                       ),
                       SizedBox(height: 10),
                       FutureBuilder<String>(
@@ -104,7 +78,10 @@ class _AccountViewState extends State<AccountView> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             String userId = snapshot.data!;
-                            return Text(userId);
+                            return Text(
+                              userId,
+                              style: AppStyles.bodyTextStyle,
+                            );
                           } else if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return CircularProgressIndicator();
@@ -116,6 +93,7 @@ class _AccountViewState extends State<AccountView> {
                         },
                       ),
                       SizedBox(height: 24),
+
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/main');
@@ -123,6 +101,7 @@ class _AccountViewState extends State<AccountView> {
                         child: Text(
                           'Go to Main Page',
                         ),
+                        style: AppStyles.defaultButtonStyle,
                       ),
                     ],
                   ),

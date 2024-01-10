@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/helpers/not_logged_in_view.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
+import 'package:frontend/utils/styles.dart';
 import 'package:frontend/views/admin_view.dart';
 import 'package:frontend/views/create_product_view.dart';
 import 'package:frontend/views/edit_product_view.dart';
@@ -120,10 +121,7 @@ class _AppScaffoldState extends State<AppScaffold> {
             children: [
               Text(
                 'Trendify',
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 20,
-                ),
+                style: AppStyles.logoTextStyle
               ),
               Icon(Icons.rocket_launch_outlined),
               SizedBox(width: 50)
