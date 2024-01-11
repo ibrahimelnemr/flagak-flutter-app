@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
+import 'package:frontend/widgets/custom_button.dart';
+import 'package:frontend/widgets/custom_text_button.dart';
+import 'package:frontend/widgets/custom_text_field.dart';
 
 class EditProductView extends StatefulWidget {
   final Product product;
@@ -21,20 +24,22 @@ class _EditProductViewState extends State<EditProductView> {
     super.initState();
 
     nameController = TextEditingController(text: widget.product.name);
-    descriptionController = TextEditingController(text: widget.product.description);
-    priceController = TextEditingController(text: widget.product.price.toString());
+    descriptionController =
+        TextEditingController(text: widget.product.description);
+    priceController =
+        TextEditingController(text: widget.product.price.toString());
   }
 
   void _updateProduct() async {
     try {
-
       var productId = widget.product.productId;
       var name = nameController.text;
       var description = descriptionController.text;
       var price = priceController.text;
 
-      print("Attempting to edit product with id: $productId, name: $name, description: $description, price $price");
-      
+      print(
+          "Attempting to edit product with id: $productId, name: $name, description: $description, price $price");
+
       await ApiService.editProduct(
         productId: widget.product.productId,
         name: nameController.text,
@@ -73,74 +78,49 @@ class _EditProductViewState extends State<EditProductView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Edit Product',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        appBar: AppBar(
+          title: Text(
+            'Edit Product',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          iconTheme: IconThemeData(color: Colors.black),
         ),
-        iconTheme: IconThemeData(color: Colors.black),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(50),
-              child: Image(
-                  image: AssetImage('assets/1.png'),
-                )),
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: 'Product Name',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(50),
+                  child: Image(
+                    image: AssetImage('assets/1.png'),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Product Description',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+                CustomTextField(
+                    controller: nameController, labelText: "Product Name"),
+                SizedBox(height: 16),
+                CustomTextField(
+                    controller: descriptionController,
+                    labelText: "Product Description"),
+                SizedBox(height: 16),
+                CustomTextField(
+                  controller: priceController,
+                  labelText: "Product Price",
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                 ),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: priceController,
-              decoration: InputDecoration(
-                labelText: 'Product Price',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+                SizedBox(height: 16),
+                CustomButton(buttonText: "Confirm", onPressed: _updateProduct),
+                SizedBox(height: 16),
+                CustomTextButton(
+                  buttonText: 'Back to Admin Page',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              ],
             ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _updateProduct,
-              child: Text('Confirm'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-              ),
-            ),
-            SizedBox(height: 16),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Back to Admin Page',
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
