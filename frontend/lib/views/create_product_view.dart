@@ -84,16 +84,6 @@ class _CreateProductViewState extends State<CreateProductView> {
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
 
-            // TextField(
-            //   controller: priceController,
-            //   decoration: InputDecoration(
-            //     labelText: 'Product Price',
-            //     focusedBorder: OutlineInputBorder(
-            //       borderSide: BorderSide(color: Colors.blue),
-            //     ),
-            //   ),
-            //   keyboardType: TextInputType.numberWithOptions(decimal: true),
-            // ),
             SizedBox(height: 16),
             CustomButton(buttonText: 'Confirm', onPressed: _createProduct),
             SizedBox(height: 16),
