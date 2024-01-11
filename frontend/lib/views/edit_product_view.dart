@@ -115,7 +115,7 @@ class _EditProductViewState extends State<EditProductView> {
                 CustomTextButton(
                   buttonText: 'Back to Admin Page',
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, '/admin');
                   },
                 ),
               ],

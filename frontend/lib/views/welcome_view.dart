@@ -19,7 +19,7 @@ class WelcomeView extends StatelessWidget {
             CustomButton(
               buttonText: 'Get Started',
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushReplacementNamed(context, '/login');
               },
             ),
           ],

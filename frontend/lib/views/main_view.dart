@@ -40,7 +40,7 @@ class _MainViewState extends State<MainView> {
   }
 
   void _navigateToAdminView() {
-    Navigator.pushNamed(context, '/admin');
+    Navigator.pushReplacementNamed(context, '/admin');
     _refreshProducts();
 
     (_mainViewKey.currentState as _MainViewState).refreshProducts();
@@ -48,7 +48,7 @@ class _MainViewState extends State<MainView> {
 
   Future<void> _viewProduct(Product product) async {
     if (await isAdminFuture) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => ViewProductView(product: product),

@@ -36,7 +36,7 @@ class _AdminViewState extends State<AdminView> {
 
   void _viewProduct(Product product) async {
     if (await ApiService.isAdmin()) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => ViewProductView(product: product),
@@ -46,7 +46,7 @@ class _AdminViewState extends State<AdminView> {
   }
 
   void _editProduct(Product product) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => EditProductView(product: product),
@@ -56,7 +56,7 @@ class _AdminViewState extends State<AdminView> {
 
   void _createProduct() {
 // Navigate to CreateProductView
-    Navigator.pushNamed(context, '/createproduct');
+    Navigator.pushReplacementNamed(context, '/createproduct');
   }
 
   @override
