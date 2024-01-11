@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:frontend/helpers/not_logged_in_view.dart";
 import "package:frontend/services/api_service.dart";
 import "package:frontend/utils/styles.dart";
+import "package:frontend/widgets/custom_button.dart";
 
 class AccountView extends StatefulWidget {
   @override
@@ -93,15 +94,11 @@ class _AccountViewState extends State<AccountView> {
                         },
                       ),
                       SizedBox(height: 24),
-
-                      ElevatedButton(
+                      CustomButton(
+                        buttonText: "Go to Main Page",
                         onPressed: () {
-                          Navigator.pushNamed(context, '/main');
+                          Navigator.pushReplacementNamed(context, '/main');
                         },
-                        child: Text(
-                          'Go to Main Page',
-                        ),
-                        style: AppStyles.defaultButtonStyle,
                       ),
                     ],
                   ),
