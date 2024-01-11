@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
 import 'package:frontend/services/product.dart';
 import 'package:frontend/utils/styles.dart';
+import 'package:frontend/widgets/custom_button.dart';
+import 'package:frontend/widgets/custom_text_button.dart';
+import 'package:frontend/widgets/custom_text_field.dart';
 
 class CreateProductView extends StatefulWidget {
-  
   //final Product product;
 
   CreateProductView();
@@ -60,7 +62,6 @@ class _CreateProductViewState extends State<CreateProductView> {
         title: Text(
           'Create Product',
           style: AppStyles.titleTextStyle,
-          
         ),
         iconTheme: IconThemeData(color: Colors.black),
       ),
@@ -69,53 +70,38 @@ class _CreateProductViewState extends State<CreateProductView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: 'Product Name',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
-            ),
+            CustomTextField(
+                controller: nameController, labelText: 'Product Name'),
             SizedBox(height: 16),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Product Description',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
-            ),
+            CustomTextField(
+                controller: descriptionController,
+                labelText: "Product Description"),
             SizedBox(height: 16),
-            TextField(
+
+            CustomTextField(
               controller: priceController,
-              decoration: InputDecoration(
-                labelText: 'Product Price',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
+              labelText: 'Product Price',
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
+
+            // TextField(
+            //   controller: priceController,
+            //   decoration: InputDecoration(
+            //     labelText: 'Product Price',
+            //     focusedBorder: OutlineInputBorder(
+            //       borderSide: BorderSide(color: Colors.blue),
+            //     ),
+            //   ),
+            //   keyboardType: TextInputType.numberWithOptions(decimal: true),
+            // ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _createProduct,
-              child: Text('Confirm'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-              ),
-            ),
+            CustomButton(buttonText: 'Confirm', onPressed: _createProduct),
             SizedBox(height: 16),
-            TextButton(
+            CustomTextButton(
+              buttonText: 'Back to Admin Page',
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text(
-                'Back to Admin Page',
-                style: TextStyle(color: Colors.blue),
-              ),
             ),
           ],
         ),
