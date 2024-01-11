@@ -44,6 +44,7 @@ class StartApp extends StatelessWidget {
         primaryColor: Colors.black,
         fontFamily: 'Sans-serif',
         scaffoldBackgroundColor: Colors.white,
+        
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 0,
@@ -52,10 +53,7 @@ class StartApp extends StatelessWidget {
             fontSize: 20,
           ),
         ),
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.black,
-          textTheme: ButtonTextTheme.normal,
-        ),
+        
       ),
     );
   }
@@ -149,7 +147,7 @@ class _AppScaffoldState extends State<AppScaffold> {
                     title: const Text('Account'),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, '/account');
+                      Navigator.pushReplacementNamed(context, '/account');
                     },
                   );
               },
@@ -167,7 +165,7 @@ class _AppScaffoldState extends State<AppScaffold> {
                     title: const Text('Browse Products'),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, '/main');
+                      Navigator.pushReplacementNamed(context, '/main');
                     },
                   );
               },
@@ -185,7 +183,7 @@ class _AppScaffoldState extends State<AppScaffold> {
                     title: const Text('Admin Interface'),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, '/admin');
+                      Navigator.pushReplacementNamed(context, '/admin');
                     },
                   );
               },
@@ -210,7 +208,7 @@ class _AppScaffoldState extends State<AppScaffold> {
                     onTap: () {
                       Navigator.pop(context);
                       _logout();
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                   );
               },
@@ -235,7 +233,7 @@ class _AppScaffoldState extends State<AppScaffold> {
                     ),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                   );
               },
