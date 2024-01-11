@@ -112,12 +112,6 @@ class _EditProductViewState extends State<EditProductView> {
                 SizedBox(height: 16),
                 CustomButton(buttonText: "Confirm", onPressed: _updateProduct),
                 SizedBox(height: 16),
-                CustomTextButton(
-                  buttonText: 'Back to Admin Page',
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/admin');
-                  },
-                ),
               ],
             ),
           ),
