@@ -82,7 +82,6 @@ class _AppScaffoldState extends State<AppScaffold> {
   void _logout() async {
     try {
       await ApiService.logoutUser();
-// Navigate to login screen after successful logout
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

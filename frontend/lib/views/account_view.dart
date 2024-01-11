@@ -3,6 +3,7 @@ import "package:frontend/helpers/not_logged_in_view.dart";
 import "package:frontend/services/api_service.dart";
 import "package:frontend/utils/styles.dart";
 import "package:frontend/widgets/custom_button.dart";
+import "package:frontend/widgets/custom_text_button.dart";
 
 class AccountView extends StatefulWidget {
   @override
@@ -21,6 +22,34 @@ class _AccountViewState extends State<AccountView> {
     userNameFuture = ApiService.getUserName();
     userEmailFuture = ApiService.getUserEmail();
     isLoggedInFuture = ApiService.isLoggedIn();
+  }
+
+  void _logout() async {
+    try {
+      await ApiService.logoutUser();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Logout successful!',
+            style: TextStyle(color: Colors.green),
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      ApiService.onProductUpdate = null;
+      Navigator.pushReplacementNamed(context, '/login');
+    } catch (error) {
+      print("Error logging out: $error");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Error logging out: $error',
+            style: TextStyle(color: Colors.red),
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
@@ -94,12 +123,23 @@ class _AccountViewState extends State<AccountView> {
                         },
                       ),
                       SizedBox(height: 24),
-                      CustomButton(
-                        buttonText: "Go to Main Page",
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/main');
-                        },
+                      SizedBox(height: 24),
+
+                      TextButton(
+                        onPressed: _logout,
+                        style:
+                            TextButton.styleFrom(foregroundColor: Colors.red),
+                        child: Text("Logout"),
                       ),
+
+                      // CustomTextButton(buttonText: "Logout", onPressed: _logout, ),
+
+                      // CustomButton(
+                      //   buttonText: "Go to Main Page",
+                      //   onPressed: () {
+                      //     Navigator.pushReplacementNamed(context, '/main');
+                      //   },
+                      // ),
                     ],
                   ),
                 ],
