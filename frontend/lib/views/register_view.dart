@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_service.dart';
+import 'package:frontend/widgets/custom_button.dart';
+import 'package:frontend/widgets/custom_text_field.dart';
 
 class RegisterView extends StatefulWidget {
   @override
@@ -20,13 +22,14 @@ class _RegisterViewState extends State<RegisterView> {
           color: Colors.black,
           child: Column(
             children: [
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Text(
                 "Register",
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: 30,
-                  
                 ),
               ),
             ],
@@ -38,35 +41,18 @@ class _RegisterViewState extends State<RegisterView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: fullNameController,
-              decoration: InputDecoration(
-                labelText: 'Full Name',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
-            ),
+            CustomTextField(
+                controller: fullNameController, labelText: 'Full Name'),
             SizedBox(height: 16),
-            TextField(
+            CustomTextField(
               controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email Address',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
+              labelText: 'Email Address',
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 16),
-            TextField(
+            CustomTextField(
               controller: passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
+              labelText: 'Password',
               obscureText: true,
             ),
             SizedBox(height: 16),
@@ -105,8 +91,7 @@ class _RegisterViewState extends State<RegisterView> {
               ],
             ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
+            CustomButton(buttonText: "Register", onPressed: () async {
                 try {
                   final response = await ApiService.registerUser(
                     name: fullNameController.text,
@@ -136,12 +121,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                   );
                 }
-              },
-              child: Text('Register'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-              ),
-            ),
+              },),
           ],
         ),
       ),
