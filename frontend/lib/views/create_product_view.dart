@@ -87,12 +87,6 @@ class _CreateProductViewState extends State<CreateProductView> {
             SizedBox(height: 16),
             CustomButton(buttonText: 'Confirm', onPressed: _createProduct),
             SizedBox(height: 16),
-            CustomTextButton(
-              buttonText: 'Back to Admin Page',
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
           ],
         ),
       ),
