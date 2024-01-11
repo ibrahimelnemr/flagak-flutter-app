@@ -67,9 +67,11 @@ class _RegisterViewState extends State<RegisterView> {
                       value: false,
                       groupValue: isAdmin,
                       onChanged: (value) {
-                        setState(() {
-                          isAdmin = value as bool;
-                        });
+                        setState(
+                          () {
+                            isAdmin = value as bool;
+                          },
+                        );
                       },
                     ),
                   ],
@@ -91,7 +93,9 @@ class _RegisterViewState extends State<RegisterView> {
               ],
             ),
             SizedBox(height: 16),
-            CustomButton(buttonText: "Register", onPressed: () async {
+            CustomButton(
+              buttonText: "Register",
+              onPressed: () async {
                 try {
                   final response = await ApiService.registerUser(
                     name: fullNameController.text,
@@ -121,7 +125,8 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                   );
                 }
-              },),
+              },
+            ),
           ],
         ),
       ),
